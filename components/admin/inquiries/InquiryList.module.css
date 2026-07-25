@@ -1,0 +1,154 @@
+.tableWrapper {
+  overflow-x: auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  table-layout: auto;
+  min-width: 0;
+}
+
+/* Only apply min-width when screen is wide enough to accommodate it */
+@media (min-width: 1201px) {
+  .table {
+    width: 100%;
+  }
+}
+
+/* On smaller screens, allow horizontal scroll */
+@media (max-width: 1200px) {
+  .table {
+    min-width: 1200px;
+  }
+}
+
+.table thead {
+  background: #f8f9fa;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table td {
+  padding: 16px;
+  border-bottom: 1px solid #e9ecef;
+  color: #212529;
+}
+
+.table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.checkboxCol {
+  width: 40px;
+  text-align: center;
+}
+
+.checkboxButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  transition: color 0.2s;
+}
+
+.checkboxButton:hover {
+  color: #495057;
+}
+
+.checkboxButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.actionsCol {
+  width: 120px;
+  text-align: right;
+}
+
+.loading {
+  padding: 40px;
+  text-align: center;
+}
+
+.skeletonRow {
+  height: 60px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.empty {
+  padding: 60px 20px;
+  text-align: center;
+  color: #6c757d;
+}
+
+.empty p {
+  font-size: 16px;
+}
+
+/* Table horizontal scroll when needed */
+.tableWrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.tableWrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.tableWrapper::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.tableWrapper::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+@media (max-width: 768px) {
+  .table {
+    font-size: 12px;
+  }
+
+  .table th,
+  .table td {
+    padding: 10px 8px;
+  }
+}

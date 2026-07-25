@@ -1,0 +1,111 @@
+.loginContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--gray-50);
+  padding: 1rem;
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 400px;
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 1px solid var(--gray-200);
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: var(--gray-500);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--gray-700);
+}
+
+.input {
+  padding: 0.75rem;
+  border: 1px solid var(--gray-300);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--gray-900);
+  transition: all 0.2s;
+  background-color: white;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--brand-color);
+  box-shadow: 0 0 0 3px rgba(176, 157, 137, 0.1);
+}
+
+.input:disabled {
+  background-color: var(--gray-50);
+  cursor: not-allowed;
+}
+
+.input::placeholder {
+  color: var(--gray-400);
+}
+
+.error {
+  padding: 0.75rem;
+  background-color: #FEE2E2;
+  border: 1px solid #FCA5A5;
+  border-radius: 0.5rem;
+  color: #DC2626;
+  font-size: 0.875rem;
+}
+
+.submitBtn {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--brand-color);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background-color: #9a8a7a;
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+

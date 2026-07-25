@@ -1,0 +1,145 @@
+/* Cookie Policy modal — matches Privacy Policy modal style */
+.cookieOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.cookieBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: calc(var(--z-modal) + 0);
+}
+
+.cookieDialog {
+  position: relative;
+  z-index: calc(var(--z-modal) + 1);
+  width: 100%;
+  max-width: 720px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.cookieHeader {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 1.5rem 0.5rem;
+}
+
+.cookieTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.cookieHeaderClose {
+  padding: 0.375rem;
+  font-size: 1rem;
+  color: var(--gray-500);
+  background: none;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.cookieHeaderClose:hover {
+  color: var(--gray-700);
+  background: var(--gray-100);
+}
+
+.cookieHeaderClose:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--gray-400);
+}
+
+.cookieBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem 1.5rem 1rem;
+  min-height: 0;
+}
+
+.cookieBodyParagraph {
+  font-size: 0.875rem;
+  line-height: 1.625;
+  color: var(--gray-800);
+  margin-bottom: 0.75rem;
+}
+
+.cookieSectionTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.cookieBodyParagraph:empty,
+.cookieBodySpacer {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
+.cookiePlaceholderNote {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  font-size: 0.75rem;
+  color: #92400e;
+}
+
+.cookiePlaceholderNote p {
+  margin: 0;
+  font-size: inherit;
+  line-height: 1.5;
+}
+
+.cookiePlaceholderNote p + p {
+  margin-top: 0.25rem;
+}
+
+.cookiePlaceholderNote strong {
+  font-weight: 600;
+}
+
+.cookieFooter {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 1.5rem 1.5rem;
+  border-top: 1px solid var(--gray-100);
+}
+
+.cookieFooterBtn {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: white;
+  background: var(--gray-800);
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+.cookieFooterBtn:hover {
+  background: var(--gray-700);
+}
+
+.cookieFooterBtn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--gray-500);
+}

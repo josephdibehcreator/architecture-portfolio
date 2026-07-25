@@ -1,0 +1,56 @@
+.section {
+  padding: 6rem 0;
+  border-top: 1px solid var(--gray-200);
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 0.75rem;
+  font-family: var(--font-space-mono), monospace;
+  color: #EF4444;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  margin-bottom: 1rem;
+  transition: color 0.3s;
+}
+
+.card:hover .title {
+  color: var(--brand-color);
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--gray-500);
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+  }
+}
+

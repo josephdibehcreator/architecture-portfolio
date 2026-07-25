@@ -1,0 +1,137 @@
+.projectViewer {
+  width: 100%;
+  background-color: #111827;
+  color: white;
+  overflow: hidden;
+  transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+  z-index: 0;
+}
+
+.viewerOpen {
+  max-height: 100vh;
+  min-height: 85vh;
+  height: 85vh;
+  opacity: 1;
+}
+
+.viewerCorner {
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #FF3333;
+  z-index: 20;
+  transition: all 0.7s ease-out;
+}
+
+.viewerCorner[data-position="top-left"] {
+  top: 1.5rem;
+  left: 1.5rem;
+  border-top-color: #FF3333;
+  border-left-color: #FF3333;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.viewerCorner[data-position="top-right"] {
+  top: 1.5rem;
+  right: 1.5rem;
+  border-top-color: #FF3333;
+  border-right-color: #FF3333;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.viewerCorner[data-position="bottom-left"] {
+  bottom: 1.5rem;
+  left: 1.5rem;
+  border-bottom-color: #FF3333;
+  border-left-color: #FF3333;
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+
+.viewerCorner[data-position="bottom-right"] {
+  bottom: 1.5rem;
+  right: 1.5rem;
+  border-bottom-color: #FF3333;
+  border-right-color: #FF3333;
+  border-left-color: transparent;
+  border-top-color: transparent;
+}
+
+.viewerBackground {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.slideshowContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.slideActive {
+  opacity: 1;
+}
+
+.slideImage {
+  object-fit: contain;
+  background-color: #000;
+}
+
+@media (max-width: 1023px) {
+  .slideImage {
+    object-fit: cover;
+  }
+}
+
+@media (min-width: 1024px) {
+  .slideImage {
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 767px) {
+  .viewerOpen {
+    min-height: 89vh;
+    height: 89vh;
+    max-height: 89vh;
+  }
+}
+
+.viewerOverlay1 {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.viewerOverlay2 {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(17, 24, 39, 0.9), transparent, transparent);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.noImages {
+  padding: 4rem 1.5rem;
+  text-align: center;
+  color: #6c757d;
+}
+
+.noImages p {
+  font-size: 1rem;
+  margin: 0;
+}
+

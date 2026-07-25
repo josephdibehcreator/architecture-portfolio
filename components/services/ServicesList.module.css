@@ -1,0 +1,296 @@
+.services {
+  border-top: 1px solid var(--gray-200);
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1.5rem;
+  justify-content: space-between;
+}
+
+.label {
+  display: block;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: #EF4444;
+  letter-spacing: 0.1em;
+  font-family: var(--font-space-mono), monospace;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  transition: color 0.3s;
+}
+
+.title a,
+.title span {
+  color: inherit;
+  text-decoration: none;
+}
+
+.title:hover {
+  color: var(--brand-color);
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.controlBtn {
+  padding: 0.5rem;
+  border: 1px solid var(--gray-200);
+  border-radius: 50%;
+  background: white;
+  color: var(--gray-700);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  transform: scale(1);
+  user-select: none;
+}
+
+.controlBtn:hover {
+  background-color: var(--brand-color);
+  color: white;
+  border-color: var(--brand-color);
+  transform: scale(1.05);
+}
+
+.controlBtn:active {
+  transform: scale(0.95);
+}
+
+.scrollContainer {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem; /* 24px */
+  padding: 1.5rem 1.5rem 3rem 1.5rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  max-width: 80rem;
+  margin: 0 auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: auto; /* Changed to auto for better mobile performance */
+  box-sizing: border-box;
+  /* Optimize for mobile performance - simplified GPU acceleration */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  /* Only use will-change when actively scrolling to reduce memory usage */
+  /* Removed contain and perspective as they can cause conflicts on mobile */
+}
+
+.scrollContainer::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobileScrollContainer {
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: auto;
+    overscroll-behavior-x: contain;
+    touch-action: pan-y;
+  }
+}
+
+.motionTrack {
+  display: flex;
+  width: fit-content;
+  /* SAME GAP AS DESKTOP - ensures consistent spacing between cards */
+  gap: 1.5rem; /* 24px - matches .scrollContainer gap */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.serviceCard {
+  min-width: 300px;
+  max-width: 300px;
+  width: 300px;
+  flex-shrink: 0;
+  scroll-snap-align: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card {
+  position: relative;
+  height: 100%;
+  border: 1px solid var(--gray-200);
+  padding: 2rem;
+  background: white;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.card:hover {
+  background: white;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  transform: translateY(-0.25rem);
+}
+
+.corner {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 2px solid transparent;
+  transition: all 0.3s ease-out;
+  z-index: 20;
+}
+
+.cornerTopLeft {
+  top: 0;
+  left: 0;
+  border-top-color: transparent;
+  border-left-color: transparent;
+}
+
+.cornerTopRight {
+  top: 0;
+  right: 0;
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+
+.cornerBottomLeft {
+  bottom: 0;
+  left: 0;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+
+.cornerBottomRight {
+  bottom: 0;
+  right: 0;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+}
+
+.card:hover .cornerTopLeft {
+  width: 1rem;
+  height: 1rem;
+  border-top-color: #FF3333;
+  border-left-color: #FF3333;
+}
+
+.card:hover .cornerTopRight {
+  width: 1rem;
+  height: 1rem;
+  border-top-color: #FF3333;
+  border-right-color: #FF3333;
+}
+
+.card:hover .cornerBottomLeft {
+  width: 1rem;
+  height: 1rem;
+  border-bottom-color: #FF3333;
+  border-left-color: #FF3333;
+}
+
+.card:hover .cornerBottomRight {
+  width: 1rem;
+  height: 1rem;
+  border-bottom-color: #FF3333;
+  border-right-color: #FF3333;
+}
+
+.iconContainer {
+  position: relative;
+  z-index: 10;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  background-color: var(--gray-50);
+  color: var(--gray-900);
+  transition: all 0.3s;
+}
+
+.card:hover .iconContainer {
+  color: #EF4444;
+  transform: scale(1.1);
+}
+
+.cardHeader {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  gap: 0.75rem;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.card:hover .cardTitle {
+  color: #EF4444;
+}
+
+.badge {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  color: #EF4444;
+  letter-spacing: 0.1em;
+  font-family: var(--font-space-mono), monospace;
+  border: 1px solid rgba(239,68,68,0.1);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background-color: rgba(239,68,68,0.05);
+  white-space: nowrap;
+}
+
+.cardDescription {
+  position: relative;
+  z-index: 10;
+  font-size: 0.875rem;
+  color: var(--gray-500);
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+.cardLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+
+.cardLink:hover {
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .serviceCard { min-width: 380px; max-width: 380px; width: 380px; }
+
+  /* Desktop is transform-driven; prevent scrollLeft repaint work. */
+  .scrollContainer {
+    overflow: hidden;
+  }
+
+  .header { flex-direction: row; align-items: flex-end; }
+}

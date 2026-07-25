@@ -1,0 +1,98 @@
+.hero {
+  padding-top: 12rem;
+  padding-bottom: 6rem;
+  position: relative;
+}
+
+.content {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.innerContent {
+  max-width: 64rem;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.label {
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: #EF4444;
+  letter-spacing: 0.1em;
+  font-family: var(--font-space-mono), monospace;
+}
+
+.separator {
+  color: var(--gray-300);
+  font-family: var(--font-space-mono), monospace;
+}
+
+.current {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--gray-400);
+  letter-spacing: 0.1em;
+  font-family: var(--font-space-mono), monospace;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  color: var(--gray-900);
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--brand-color);
+  font-family: var(--font-space-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 3rem;
+}
+
+.highlight {
+  background-color: var(--gray-50);
+  border-left: 3px solid var(--brand-color);
+  padding: 2rem;
+  border-radius: 0;
+}
+
+.highlightText {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--gray-600);
+  font-weight: 300;
+  margin: 0;
+}
+
+.highlightText strong {
+  color: var(--gray-900);
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .subtitle {
+    font-size: 1.125rem;
+  }
+
+  .highlight {
+    padding: 2.5rem 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: 4.5rem;
+  }
+}

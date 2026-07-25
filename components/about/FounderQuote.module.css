@@ -1,0 +1,104 @@
+.section {
+  padding: 8rem 0;
+  border-top: 1px solid var(--gray-200);
+}
+
+.content {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+}
+
+.quoteMark {
+  position: absolute;
+  top: -2.5rem;
+  left: -2.5rem;
+  font-size: 9rem;
+  color: rgba(176, 157, 137, 0.1);
+  font-family: serif;
+  user-select: none;
+  pointer-events: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.section:hover .quoteMark {
+  color: rgba(239, 68, 68, 0.15);
+  transform: scale(1.05);
+}
+
+.quoteContent {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.quotes {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.quote {
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: var(--gray-600);
+  line-height: 1.75;
+  font-style: italic;
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+.line {
+  width: 3rem;
+  height: 1px;
+  background-color: var(--brand-color);
+  transition: all 0.3s ease;
+}
+
+.section:hover .line {
+  width: 4rem;
+  background-color: #EF4444;
+  height: 2px;
+}
+
+.name {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--gray-900);
+}
+
+.role {
+  font-size: 0.75rem;
+  color: var(--brand-color);
+  font-family: var(--font-space-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 0.25rem;
+  transition: color 0.3s ease;
+}
+
+.section:hover .role {
+  color: #EF4444;
+}
+
+@media (max-width: 767px) {
+  .quoteMark {
+    position: relative;
+    top: auto;
+    left: auto;
+    display: block;
+    font-size: 6rem;
+    line-height: 0.5;
+    margin-bottom: 0.5rem;
+    color: rgba(176, 157, 137, 0.2);
+  }
+}
+

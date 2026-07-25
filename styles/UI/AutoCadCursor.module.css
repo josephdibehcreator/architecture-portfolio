@@ -1,0 +1,35 @@
+.cursorLine {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  background-color: #FF3333;
+  opacity: 0.6;
+  mix-blend-mode: multiply;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.cursorX {
+  height: 1px;
+  width: 100%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.cursorY {
+  width: 1px;
+  height: 100%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.cursorLine.active {
+  opacity: 1;
+  background-color: #FF3333;
+}
+
+@media (max-width: 1024px) {
+  .cursorLine {
+    display: none;
+  }
+}
+

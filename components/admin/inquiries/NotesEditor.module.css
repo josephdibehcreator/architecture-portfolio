@@ -1,0 +1,165 @@
+.notesEditor {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.addNoteSection {
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.75rem;
+}
+
+.textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  margin-bottom: 0.75rem;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.textarea:disabled {
+  background: #e9ecef;
+  cursor: not-allowed;
+}
+
+.addButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.addButton:hover:not(:disabled) {
+  background: #0056b3;
+}
+
+.addButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.notesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.notesTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #212529;
+  margin: 0;
+}
+
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+.notes {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.noteItem {
+  padding: 1rem;
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  transition: box-shadow 0.2s;
+}
+
+.noteItem:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.noteHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.noteAuthor {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+.noteDate {
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+.noteText {
+  font-size: 0.875rem;
+  color: #212529;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .notesEditor {
+    gap: 1.5rem;
+  }
+
+  .addNoteSection {
+    padding: 0.75rem;
+  }
+
+  .textarea {
+    font-size: 0.8rem;
+  }
+
+  .addButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .noteHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .noteItem {
+    padding: 0.75rem;
+  }
+
+  .noteText {
+    font-size: 0.8rem;
+  }
+}

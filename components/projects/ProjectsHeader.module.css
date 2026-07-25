@@ -1,0 +1,41 @@
+.header {
+  padding-top: 8rem;
+  padding-bottom: 0;
+  position: relative;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+}
+
+.label {
+  display: block;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: #EF4444;
+  letter-spacing: 0.1em;
+  font-family: var(--font-space-mono), monospace;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  transition: color 0.3s;
+}
+
+.title:hover {
+  color: var(--brand-color);
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+}
+

@@ -1,0 +1,253 @@
+.filters {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1 1 300px;
+  min-width: 250px;
+}
+
+.searchGroup {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.75rem;
+  color: #6c757d;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.625rem 0.75rem 0.625rem 2.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.center {
+  flex: 2 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6c757d;
+  flex-shrink: 0;
+}
+
+.filterSelect {
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  min-width: 140px;
+  max-width: 200px;
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.dateRangeGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.dateInput {
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  transition: border-color 0.2s;
+  min-width: 140px;
+}
+
+.dateInput:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.dateSeparator {
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.bulkActions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #e7f3ff;
+  border-radius: 4px;
+}
+
+.selectedCount {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #0056b3;
+}
+
+.bulkButton {
+  padding: 0.375rem 0.75rem;
+  background: white;
+  color: #495057;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.bulkButton:hover:not(:disabled) {
+  background: #f8f9fa;
+  border-color: #adb5bd;
+}
+
+.bulkButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.deleteButton {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.deleteButton:hover:not(:disabled) {
+  background: #fee;
+  border-color: #c82333;
+}
+
+@media (max-width: 1200px) {
+  .filters {
+    gap: 0.75rem;
+  }
+
+  .left {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+
+  .center {
+    flex: 1 1 100%;
+    gap: 0.5rem;
+  }
+
+  .right {
+    flex: 1 1 100%;
+    margin-left: 0;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .left,
+  .center,
+  .right {
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .searchInput {
+    width: 100%;
+  }
+
+  .center {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .filterGroup {
+    width: 100%;
+  }
+
+  .filterSelect {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  .dateRangeGroup {
+    width: 100%;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .dateInput {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .dateSeparator {
+    display: none;
+  }
+
+  .right {
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .bulkActions {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}

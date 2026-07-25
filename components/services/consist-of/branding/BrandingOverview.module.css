@@ -1,0 +1,196 @@
+.overview {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  border-top: 1px solid var(--gray-200);
+  position: relative;
+}
+
+.content {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.textSection {
+  max-width: 64rem;
+  margin-bottom: 4rem;
+}
+
+.label {
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: #EF4444;
+  letter-spacing: 0.1em;
+  font-family: var(--font-space-mono), monospace;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  margin-bottom: 2rem;
+  color: var(--gray-900);
+  transition: color 0.3s;
+}
+
+.title:hover {
+  color: var(--brand-color);
+}
+
+.description {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--gray-600);
+  font-weight: 300;
+  margin: 0;
+}
+
+.description strong {
+  color: var(--gray-900);
+  font-weight: 500;
+}
+
+.featureCard {
+  position: relative;
+  height: 100%;
+  border: 1px solid var(--gray-200);
+  padding: 2rem;
+  background: white;
+  transition: all 0.3s;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.featureCard:hover {
+  background: white;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  transform: translateY(-0.25rem);
+}
+
+.corner {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 2px solid transparent;
+  transition: all 0.3s ease-out;
+  z-index: 20;
+}
+
+.cornerTopLeft {
+  top: 0;
+  left: 0;
+  border-top-color: transparent;
+  border-left-color: transparent;
+}
+
+.cornerTopRight {
+  top: 0;
+  right: 0;
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+
+.cornerBottomLeft {
+  bottom: 0;
+  left: 0;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+
+.cornerBottomRight {
+  bottom: 0;
+  right: 0;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+}
+
+.featureCard:hover .cornerTopLeft {
+  width: 1rem;
+  height: 1rem;
+  border-top-color: #FF3333;
+  border-left-color: #FF3333;
+}
+
+.featureCard:hover .cornerTopRight {
+  width: 1rem;
+  height: 1rem;
+  border-top-color: #FF3333;
+  border-right-color: #FF3333;
+}
+
+.featureCard:hover .cornerBottomLeft {
+  width: 1rem;
+  height: 1rem;
+  border-bottom-color: #FF3333;
+  border-left-color: #FF3333;
+}
+
+.featureCard:hover .cornerBottomRight {
+  width: 1rem;
+  height: 1rem;
+  border-bottom-color: #FF3333;
+  border-right-color: #FF3333;
+}
+
+.iconWrapper {
+  position: relative;
+  z-index: 10;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  background-color: var(--gray-50);
+  color: var(--gray-900);
+  transition: all 0.3s;
+}
+
+.featureCard:hover .iconWrapper {
+  color: #EF4444;
+  transform: scale(1.1);
+}
+
+.featureTitle {
+  position: relative;
+  z-index: 10;
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  transition: color 0.3s;
+}
+
+.featureCard:hover .featureTitle {
+  color: #EF4444;
+}
+
+.featureText {
+  position: relative;
+  z-index: 10;
+  font-size: 0.875rem;
+  color: var(--gray-500);
+  font-weight: 300;
+  line-height: 1.75;
+  margin: 0;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .cardsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.cardWrapper {
+  width: 100%;
+}
+
+

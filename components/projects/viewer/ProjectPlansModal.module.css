@@ -1,0 +1,353 @@
+.plansModalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.plansModalContent {
+  background-color: white;
+  color: var(--gray-900);
+  width: 100%;
+  max-width: 90vw;
+  max-height: 95vh;
+  padding: 3rem;
+  position: relative;
+  border: 1px solid var(--gray-200);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.plansModalClose {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  color: var(--gray-400);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+  z-index: 50;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.plansModalClose:hover {
+  
+  color: #EF4444;
+}
+
+.plansModalCorner {
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #FF3333;
+  z-index: 50;
+  transition: all 0.7s ease-out;
+}
+
+.plansModalCorner[data-position="top-left"] {
+  top: 1.5rem;
+  left: 1.5rem;
+  border-top-color: #FF3333;
+  border-left-color: #FF3333;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.plansModalCorner[data-position="top-right"] {
+  top: 1.5rem;
+  right: 1.5rem;
+  border-top-color: #FF3333;
+  border-right-color: #FF3333;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.plansModalCorner[data-position="bottom-left"] {
+  bottom: 1.5rem;
+  left: 1.5rem;
+  border-bottom-color: #FF3333;
+  border-left-color: #FF3333;
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+
+.plansModalCorner[data-position="bottom-right"] {
+  bottom: 1.5rem;
+  right: 1.5rem;
+  border-bottom-color: #FF3333;
+  border-right-color: #FF3333;
+  border-left-color: transparent;
+  border-top-color: transparent;
+}
+
+.plansModalHeader {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--gray-200);
+  text-align: center;
+}
+
+.plansModalTitle {
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--gray-900);
+  margin-bottom: 0.5rem;
+}
+
+.plansModalSubtitle {
+  font-size: 0.875rem;
+  font-family: var(--font-space-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--brand-color);
+}
+
+.plansGalleryContainer {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 500px;
+  height: 60vh;
+  max-height: calc(95vh - 350px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.plansImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  display: block;
+}
+
+/* Ensure parent has height for fill images */
+.plansGalleryContainer .plansImageWrapper {
+  height: 100%;
+  min-height: 500px;
+}
+
+.planImageContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid var(--gray-200);
+}
+
+.planImageActive {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 10;
+}
+
+.planImageHidden {
+  opacity: 0;
+  transform: scale(0.95);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.planImage {
+  object-fit: contain !important;
+}
+
+.planNavBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--gray-200);
+  background-color: white;
+  backdrop-filter: blur(8px);
+  color: var(--gray-700);
+  transition: all 0.3s;
+  cursor: pointer;
+  border-radius: 0;
+  z-index: 20;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.planNavBtn:hover {
+  background-color: var(--brand-color);
+  border-color: var(--brand-color);
+  color: white;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.planNavBtnPrev {
+  left: 1.5rem;
+}
+
+.planNavBtnNext {
+  right: 1.5rem;
+}
+
+.planCounter {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 1rem;
+  background-color: white;
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--gray-200);
+  z-index: 20;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.planCounterText {
+  font-size: 0.75rem;
+  font-family: var(--font-space-mono), monospace;
+  color: var(--gray-700);
+  letter-spacing: 0.05em;
+}
+
+.planThumbnails {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--gray-200);
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.planThumbnail {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border: 2px solid transparent;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.planThumbnail:hover {
+  border-color: var(--brand-color);
+  transform: scale(1.05);
+}
+
+.planThumbnailActive {
+  border-color: var(--brand-color);
+  box-shadow: 0 0 0 2px rgba(176, 157, 137, 0.2);
+}
+
+.planThumbnailImage {
+  object-fit: cover;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.planThumbnail:hover .planThumbnailImage,
+.planThumbnailActive .planThumbnailImage {
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .plansModalContent {
+    padding: 4rem;
+    max-width: 85vw;
+  }
+
+  .plansModalTitle {
+    font-size: 2.5rem;
+  }
+
+  .plansGalleryContainer {
+    min-height: 600px;
+    height: 70vh;
+    max-height: calc(95vh - 350px);
+  }
+
+  .plansImageWrapper {
+    min-height: 600px;
+  }
+
+  .planNavBtn {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .planNavBtnPrev {
+    left: 2rem;
+  }
+
+  .planNavBtnNext {
+    right: 2rem;
+  }
+
+  .planThumbnail {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 767px) {
+  .planNavBtn {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .planNavBtnPrev {
+    left: 0.5rem;
+  }
+
+  .planNavBtnNext {
+    right: 0.5rem;
+  }
+
+  .plansModalHeader {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .plansModalTitle {
+    font-size: 1.5rem;
+  }
+
+  .plansGalleryContainer {
+    min-height: 400px;
+    height: 50vh;
+    margin-bottom: 1rem;
+  }
+
+  .plansImageWrapper {
+    min-height: 400px;
+  }
+}
+

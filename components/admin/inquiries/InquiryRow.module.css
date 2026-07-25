@@ -1,0 +1,159 @@
+.row {
+  transition: background-color 0.2s;
+}
+
+.row:hover {
+  background: #f8f9fa;
+}
+
+.checkboxCol {
+  width: 50px;
+}
+
+.checkboxButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  transition: color 0.2s;
+}
+
+.checkboxButton:hover:not(:disabled) {
+  color: #007bff;
+}
+
+.checkboxButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.dateCell {
+  font-size: 0.75rem;
+  color: #6c757d;
+  white-space: nowrap;
+}
+
+.clientCell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.clientCell strong {
+  font-weight: 600;
+  color: #212529;
+}
+
+.clientType {
+  font-size: 0.75rem;
+  color: #6c757d;
+  padding: 0.125rem 0.5rem;
+  background: #e9ecef;
+  border-radius: 12px;
+  display: inline-block;
+  width: fit-content;
+}
+
+.contactCell {
+  font-size: 0.875rem;
+}
+
+.phone {
+  font-size: 0.75rem;
+  color: #6c757d;
+  margin-top: 0.25rem;
+}
+
+.servicesCell {
+  font-size: 0.875rem;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.projectCell {
+  font-size: 0.75rem;
+  color: #6c757d;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.statusDraft {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.statusSubmitted {
+  background: #cfe2ff;
+  color: #084298;
+}
+
+.statusReviewed {
+  background: #d1e7dd;
+  color: #0f5132;
+}
+
+.statusCompleted {
+  background: #d1e7dd;
+  color: #0f5132;
+}
+
+.statusCancelled {
+  background: #f8d7da;
+  color: #842029;
+}
+
+.paymentBadge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.paymentNone {
+  background: #e9ecef;
+  color: #495057;
+}
+
+.paymentPending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.paymentPaid {
+  background: #d1e7dd;
+  color: #0f5132;
+}
+
+.invoiceStatus {
+  font-size: 0.7rem;
+  color: #6c757d;
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .servicesCell {
+    max-width: 150px;
+  }
+
+  .projectCell {
+    font-size: 0.7rem;
+  }
+}

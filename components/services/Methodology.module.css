@@ -1,0 +1,207 @@
+.methodology {
+  overflow: hidden;
+  background-color: white;
+  padding: 6rem 0;
+  position: relative;
+}
+
+.gridDecoration {
+  position: absolute;
+  inset: 0;
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.header {
+  margin-bottom: 5rem;
+  max-width: 42rem;
+}
+
+.label {
+  display: block;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: #EF4444;
+  letter-spacing: 0.1em;
+  font-family: var(--font-space-mono), monospace;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  margin-bottom: 2rem;
+  transition: color 0.3s;
+}
+
+.title:hover {
+  color: var(--brand-color);
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--gray-500);
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+.timeline {
+  margin-left: 1rem;
+  border-left: 1px solid var(--gray-200);
+  padding-bottom: 3rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+}
+
+.phase {
+  position: relative;
+  padding-left: 3rem;
+}
+
+.timelineNode {
+  position: absolute;
+  left: -4px;
+  top: 0.75rem;
+  width: 9px;
+  height: 9px;
+  background-color: white;
+  border: 1px solid var(--gray-300);
+  border-radius: 50%;
+  transition: all 0.3s;
+  z-index: 10;
+}
+
+.phase:hover .timelineNode {
+  border-color: var(--brand-color);
+  transform: scale(1.25);
+}
+
+.phaseHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 3rem;
+}
+
+.phaseNumber {
+  font-size: 2.5rem;
+  transition: color 0.3s;
+  user-select: none;
+  font-weight: 300;
+  font-family: var(--font-space-mono), monospace;
+  color: var(--brand-color);
+}
+
+.phase:hover .phaseNumber {
+  color: #EF4444;
+}
+
+.phaseTitle {
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  transition: color 0.3s;
+  margin-top: 1rem;
+}
+
+.phase:hover .phaseTitle {
+  color: #EF4444;
+}
+
+.phaseDescription {
+  font-size: 0.875rem;
+  color: var(--gray-500);
+  font-weight: 300;
+  line-height: 1.75;
+  margin-bottom: 3rem;
+  max-width: 42rem;
+}
+
+.tasksGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+.task {
+  display: flex;
+  flex-direction: column;
+}
+
+.taskHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.taskLine {
+  width: 1.5rem;
+  height: 1px;
+  background-color: var(--gray-200);
+  transition: background-color 0.3s;
+}
+
+.task:hover .taskLine {
+  background-color: #FF3333;
+}
+
+.taskCode {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--gray-900);
+  font-family: var(--font-space-mono), monospace;
+}
+
+.taskDescription {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  font-weight: 300;
+  line-height: 1.75;
+  padding-left: 2.5rem;
+}
+
+.spacer {
+  padding: 8rem 0;
+}
+
+@media (min-width: 768px) {
+  .timeline {
+    margin-left: 3rem;
+  }
+
+  .phase {
+    padding-left: 6rem;
+  }
+
+  .phaseHeader {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 2rem;
+  }
+
+  .phaseNumber {
+    font-size: 3rem;
+  }
+
+  .tasksGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem 5rem;
+  }
+}
+

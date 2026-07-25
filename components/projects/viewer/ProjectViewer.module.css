@@ -1,0 +1,250 @@
+.viewerContent {
+  position: relative;
+  z-index: 20;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 1.5rem 3rem 5rem;
+}
+
+.viewerClose {
+  position: absolute;
+  top: 2rem;
+  right: 1.5rem;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+  z-index: 50;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.viewerClose:hover {
+  color: var(--brand-color);
+}
+
+.viewerInfo {
+  transform: translateY(2.5rem);
+  opacity: 0;
+  transition: all 0.7s;
+  transition-delay: 300ms;
+}
+
+.viewerInfoVisible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.viewerTags {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.viewerTag {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--brand-color);
+  color: var(--brand-color);
+  background-color: rgba(176, 157, 137, 0.1);
+  font-size: 0.75rem;
+  font-family: var(--font-space-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  backdrop-filter: blur(4px);
+}
+
+.viewerYear {
+  font-size: 0.75rem;
+  font-family: var(--font-space-mono), monospace;
+  color: rgba(156, 163, 175, 1);
+}
+
+.viewerTitle {
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.viewerActions {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 64rem;
+}
+
+.viewerDescription {
+  font-size: 1.125rem;
+  color: rgba(209, 213, 219, 1);
+  font-weight: 300;
+  line-height: 1.75;
+  max-width: 32rem;
+  border-left: 2px solid var(--brand-color);
+  padding-left: 1.5rem;
+}
+
+.viewerButtons {
+  display: flex;
+  gap: 1rem;
+  min-width: max-content;
+}
+
+.viewPlansBtn {
+  padding: 0.75rem 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: white;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  transition: all 0.3s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0;
+}
+
+.viewPlansBtn:hover {
+  background-color: var(--brand-color);
+  border-color: var(--brand-color);
+  color: white;
+}
+
+.slideNavBtn {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  color: white;
+  transition: all 0.3s;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.slideNavBtn:hover {
+  background-color: var(--brand-color);
+  border-color: var(--brand-color);
+}
+
+.infoBtn {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  color: white;
+  transition: all 0.3s;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.infoBtn:hover {
+  background-color: var(--brand-color);
+  border-color: var(--brand-color);
+}
+
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.progressFill {
+  height: 100%;
+  background-color: var(--brand-color);
+  transition: width 0.5s;
+}
+
+@media (min-width: 768px) {
+  .viewerContent {
+    padding: 3rem;
+  }
+
+  .viewerTitle {
+    font-size: 4.5rem;
+  }
+
+  .viewerDescription {
+    font-size: 1.25rem;
+  }
+
+  .viewerActions {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+@media (max-width: 767px) {
+  .viewerContent {
+    height: 89vh;
+    padding: 1.5rem 1.5rem 3.5rem;
+    justify-content: flex-end;
+  }
+
+  .viewerClose {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .viewerTags {
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .viewerTitle {
+    font-size: 2.25rem;
+    line-height: 1.05;
+    margin-bottom: 1rem;
+    word-break: break-word;
+  }
+
+  .viewerActions {
+    gap: 1.5rem;
+    max-width: 100%;
+  }
+
+  .viewerDescription {
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 100%;
+    padding-left: 1rem;
+  }
+
+  .viewerButtons {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .viewPlansBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .slideNavBtn,
+  .infoBtn {
+    width: 3rem;
+    height: 3rem;
+  }
+}

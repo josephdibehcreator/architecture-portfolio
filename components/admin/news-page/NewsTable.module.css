@@ -1,0 +1,201 @@
+.tableWrapper {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead {
+  background: #f8f9fa;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #495057;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table td {
+  padding: 1rem;
+  border-bottom: 1px solid #e9ecef;
+  font-size: 0.875rem;
+  color: #212529;
+}
+
+.table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.checkboxCol {
+  width: 50px;
+}
+
+.checkboxButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  transition: color 0.2s;
+}
+
+.checkboxButton:hover:not(:disabled) {
+  color: #007bff;
+}
+
+.checkboxButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.titleCell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.titleCell strong {
+  font-weight: 600;
+  color: #212529;
+}
+
+.slug {
+  font-size: 0.75rem;
+  color: #6c757d;
+  font-family: monospace;
+}
+
+.source {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #e9ecef;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #495057;
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statusPublished {
+  background: #d4edda;
+  color: #155724;
+}
+
+.statusDraft {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.actionsCol {
+  width: 150px;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.actionButton:hover:not(:disabled) {
+  background: #f8f9fa;
+  color: #007bff;
+}
+
+.actionButton.deleteButton:hover:not(:disabled) {
+  background: #fee;
+  color: #dc3545;
+}
+
+.actionButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.loading {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.skeletonRow {
+  height: 60px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.empty {
+  background: white;
+  border-radius: 8px;
+  padding: 3rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.empty p {
+  color: #6c757d;
+  font-size: 1rem;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .tableWrapper {
+    overflow-x: auto;
+  }
+
+  .table {
+    min-width: 800px;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
