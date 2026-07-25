@@ -4,7 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-
+.cursorignore
 # testing
 /coverage
 
@@ -39,7 +39,7 @@ site-files/
 site-files.zip
 
 # IDE and system files
-.cursor/
+.cursorignore
 .vscode/
 .idea/
 *.swp
