@@ -1,77 +1,91 @@
-# Dibeh Architecture — Frontend
+# Frontend
 
-Public marketing site and authenticated admin console for **Dibeh Architecture** (Joseph Dibeh), an architecture studio operating in Paris, the French Riviera, and Beirut. The frontend presents portfolio content, service pages, client inquiry and consultation booking (with Stripe Checkout), career applications, blogs, and news. A separate **admin** area lets studio staff manage content, bookings, and applications.
+> **The public presentation layer of a fully automated content and commerce platform.**
 
-**Production:** [https://www.dibeh-architecture.com](https://www.dibeh-architecture.com) (Vercel)  
-**API:** Express backend on Render — base URL resolved by `services/api.ts` (see [API integration](#api-integration)).
+All portfolio projects, journal articles, consultation prices, and booking availability rendered on this site are produced and managed **autonomously** — by scheduled Claude Code routines and payment-driven backend automation, not by interactive administration. The frontend is a thin, presentation-focused client: it renders the state the automated backend maintains and stays current, priced, and bookable **without any manual administration.**
+
+This is the Next.js application that renders the public website ([www.dibeh-architecture.com](https://www.dibeh-architecture.com)) and the (rarely-needed) admin console. It presents portfolio content, service pages, the client inquiry & consultation-booking wizard (Stripe Checkout), career applications, blogs, and news.
+
+**Production:** [https://www.dibeh-architecture.com](https://www.dibeh-architecture.com) (Vercel)
+**API:** Express backend on Render — base URL resolved by `services/api.ts`.
 
 ---
 
-## Tech stack & ecosystem
+## Table of contents
 
-| Category | Technology | Version (from `package.json`) |
-|----------|------------|-----------------------------|
+1. [How automation reaches the UI](#how-automation-reaches-the-ui)
+2. [Tech stack](#tech-stack)
+3. [Architecture & folder structure](#architecture--folder-structure)
+4. [The automated experiences (UI/UX)](#the-automated-experiences-uiux)
+5. [Admin console (manual override)](#admin-console-manual-override)
+6. [Local development](#local-development)
+7. [API integration](#api-integration)
+8. [Deployment (Vercel)](#deployment-vercel)
+
+---
+
+## How automation reaches the UI
+
+The frontend is intentionally a **thin, presentation-focused client**. It does not decide what content exists, what a consultation costs, or when a slot is booked — it *renders* the state that the automated backend maintains. This separation is what makes the platform self-operating.
+
+| Visitor experience | Where the data comes from — **all automated** |
+|--------------------|-----------------------------------------------|
+| **Journal / blog** | Articles are researched, written, formatted, and published by **Claude Code routines**. The UI simply fetches `/api/blogs` and renders sanitized HTML. |
+| **Portfolio / projects** | Projects, galleries, plans, and case-study metadata are created and curated by **Claude Code routines**. The UI fetches `/api/projects`. |
+| **Consultation pricing** | The price shown at checkout is computed **server-side** from the client's chosen scope (duration + optional Roadmap Report). The UI never hardcodes or calculates a price — it requests a ready-to-pay Stripe session. |
+| **Booking confirmation** | The moment Stripe payment completes, the backend confirms the inquiry and books the calendar slot. The UI's success page reflects an **already-finalized** booking. |
+
+The practical result: **the content and commerce on this site update themselves.** A visitor always sees a current portfolio, a fresh journal, accurate pricing, and live availability — with zero manual intervention.
+
+---
+
+## Tech stack
+
+| Category | Technology | Version |
+|----------|------------|---------|
 | Framework | [Next.js](https://nextjs.org/) (App Router) | `^14.2.15` |
 | UI library | React | `^18.3.1` |
 | Language | TypeScript | `^5.3.3` |
-| CSS | Bootstrap 5 + CSS Modules + global styles | `bootstrap ^5.3.2`, `react-bootstrap ^2.9.1` |
+| CSS | Bootstrap 5 + CSS Modules + globals | `bootstrap ^5.3.2`, `react-bootstrap ^2.9.1` |
 | Animation | Framer Motion | `^11.0.0` |
 | Icons | Lucide React | `^0.294.0` |
 | Carousels | Swiper | `^11.2.10` |
-| Rich text (admin blogs) | TinyMCE (`@tinymce/tinymce-react`, `tinymce`) | `^6.3.0` / `^8.3.2` |
-| Rich text (alternate) | TipTap (`@tiptap/*`) | `^3.20.1` |
+| Rich text (admin blogs) | TinyMCE | `^6.3.0` / `^8.3.2` |
 | HTML sanitization | DOMPurify | `^3.3.3` |
 | Fonts | `next/font/google` — Montserrat, Space Mono | — |
-| Bundler | Webpack (via Next.js) | — |
 | Linting | ESLint via `next lint` | — |
 
-There is **no** global state library (Redux/Zustand). State is handled with React hooks, a single `LanguageContext`, and service-layer `fetch` calls.
+No global state library. State is handled with React hooks, a single `LanguageContext` (EN/FR), and a thin `services/` `fetch` layer.
 
 ---
 
 ## Architecture & folder structure
 
-The app uses the **Next.js 14 App Router** with a **feature-oriented component layout** and a thin **services** layer for all backend communication.
+Next.js 14 **App Router** with a **feature-oriented component layout** and a thin **services** layer for all backend communication.
 
 ```
 frontend/
 ├── app/                          # Routes (App Router)
 │   ├── layout.tsx                # Root layout: fonts, SEO, LanguageProvider, GA
 │   ├── page.tsx                  # Home
-│   ├── about/
-│   ├── services/                 # Hub + per-service pages (architecture, interior, …)
-│   ├── projects/                 # Listing + [id] detail
-│   ├── news/                     # Listing + [slug]
-│   ├── blogs/[slug]/
-│   ├── inquiry/success|cancel/   # Post–Stripe Checkout
-│   ├── admin/                    # Protected admin shell
-│   │   ├── layout.tsx            # Wraps AdminLayoutClient
-│   │   ├── AdminLayoutClient.tsx # Auth gate + sidebar/topbar
-│   │   ├── login/
-│   │   ├── dashboard/
-│   │   ├── projects|testimonials|inquiries|bookings/
-│   │   ├── careers|applications|blogs|news|profile/
-│   ├── sitemap.ts                # Dynamic sitemap (fetches API)
-│   └── robots.ts
+│   ├── about/  services/  projects/  news/  blogs/[slug]/
+│   ├── inquiry/success|cancel/   # Post–Stripe Checkout landing
+│   ├── admin/                    # Protected admin shell (manual override)
+│   ├── sitemap.ts  robots.ts     # Dynamic SEO (fetch API)
 ├── components/
-│   ├── home/                     # Hero, stats, projects teaser, inquiry, career, testimonials
-│   ├── projects/                 # Grid, cards, viewer modals (gallery, plans, info)
-│   ├── services/                 # Services list + per-service “consist-of” sections
-│   ├── about/                    # Founder / studio content
-│   ├── news/                     # News listing UI
+│   ├── home/                     # Hero, stats, projects teaser, inquiry wizard, career, testimonials
+│   ├── projects/                 # Grid, cards, gallery/plans/info viewers
+│   ├── services/  about/  news/  # Content sections
 │   ├── admin/                    # Admin tables, forms, modals (by domain)
 │   └── shared/                   # Navigation, footer, GA, legal/cookie banners
-├── contexts/
-│   └── LanguageContext.tsx       # EN/FR i18n (inline dictionary, localStorage)
+├── contexts/LanguageContext.tsx  # EN/FR i18n (inline dictionary, localStorage)
 ├── services/                     # API clients (all use services/api.ts)
 │   ├── api.ts                    # Base URL, fetch wrapper, credentials
-│   ├── inquiries.ts, stripe.ts, projects.ts, …
+│   ├── inquiries.ts, stripe.ts, projects.ts, blogs.ts, news.ts, …
 │   └── admin/                    # Admin-only endpoints
 ├── config/                       # socialLinks, siteMetadata
-├── styles/                       # globals.css
 ├── next.config.js                # @ alias, Cloudinary image domains
-├── tsconfig.json                 # paths: "@/*" -> "./*"
-└── package.json
+└── tsconfig.json                 # paths: "@/*" -> "./*"
 ```
 
 ### Design patterns
@@ -79,100 +93,126 @@ frontend/
 | Pattern | Where |
 |---------|--------|
 | **App Router pages** | `app/**/page.tsx` — server components where possible; `'use client'` for interactivity |
-| **Layout composition** | `PublicLayoutWrapper` (nav + footer) for public routes; `AdminLayoutClient` for `/admin/*` |
+| **Layout composition** | Public nav/footer wrapper for public routes; `AdminLayoutClient` for `/admin/*` |
 | **Service layer** | `services/*.ts` — typed wrappers around `get` / `post` / `put` / `patch` / `del` |
 | **CSS Modules** | Co-located `*.module.css` next to components |
-| **i18n** | Client-side `LanguageContext` + `beforeInteractive` script in root layout to avoid language flash |
+| **i18n** | Client-side `LanguageContext` + `beforeInteractive` script to avoid language flash |
 | **Auth (admin)** | Cookie-based JWT; layout calls `GET /api/admin/auth/me` and redirects to `/admin/login` on 401 |
-
-There is no dedicated `hooks/` or `types/` directory; types live beside services or in component files.
 
 ---
 
-## Features (UI)
+## The automated experiences (UI/UX)
 
-### Public site
+### 1. Journal — autonomously published blogs
 
-- **Home:** Hero, editable company stats (`/api/homepage-stats`), services overview, published projects, testimonials submission/listing, career section (published job openings + application form with CV/portfolio upload), multi-step **inquiry wizard** (identity → context/documents → path → general submit or paid consultation).
-- **About:** Studio and founder narrative.
-- **Services:** Index plus dedicated pages — Architecture, Interior Design, Landscape, Photography, 3D Scanning, 3D Printing, Branding, Preliminary Declaration & Approvals.
-- **Projects:** Grid of published work; detail viewer with gallery slideshow, project info, and **plans** (only for non-Residential projects when plans exist).
-- **News & blogs:** Listing and slug-based article pages (HTML content sanitized for display).
-- **Inquiry / consultation:** Date/time availability checks, Stripe Checkout for consult path, success/cancel pages, post-payment flows coordinated with backend webhooks.
-- **Legal & privacy:** Cookie banner, consent-gated Google Analytics (GA4 `G-ESPTY58V3P`), privacy/terms/cookie modals.
-- **SEO:** Rich root metadata, JSON-LD `ArchitectureFirm` schema, dynamic `sitemap.xml`, `robots.txt` (disallows `/admin`).
+- **Listing** (`/blogs`) and **article** (`/blogs/[slug]`) pages fetch from `services/blogs.ts` → `/api/blogs`.
+- Every post is authored and published by Claude Code routines on the backend; the UI renders the pre-sanitized HTML `content` and displays cover image, category, author, and credit.
+- No editorial action is ever required in the frontend for a new article to go live — publishing a draft on the backend makes it appear here automatically.
 
-### Admin (`/admin`)
+### 2. Portfolio — autonomously curated projects
+
+- **Grid** (`/projects`) and **detail** (`/projects/[id]`) render published work from `services/projects.ts` → `/api/projects`.
+- The detail viewer presents a **gallery slideshow**, a structured **project info** panel (maîtrise d'ouvrage, surface, budget, statut…), and **plans** — shown only for non-Residential projects that have them (a rule enforced by the backend).
+- Projects, images, and metadata are created and maintained by Claude Code routines; the UI is purely presentational.
+
+### 3. Inquiry & consultation wizard — automated pricing → checkout
+
+The home page hosts a **multi-step inquiry wizard** that turns a cold visitor into a paid, booked consultation with no manual involvement:
+
+1. **Identity** — `clientType` (private/business), name, email, phone → `POST /api/inquiries`.
+2. **Context** — project details + optional document uploads (multipart) → `PUT /api/inquiries/:id/context`.
+3. **Path** — `general` inquiry or paid `consult` → `PUT /api/inquiries/:id/path`.
+4. **Consultation scope** — duration (30/60/90 min) and the optional **Roadmap Report** add-on → `PUT /api/inquiries/:id/consultation`.
+5. **Availability** — the calendar UI checks live open slots via `/api/inquiries/check-availability` and `/api/inquiries/booked-slots`.
+6. **Checkout** — `services/stripe.ts` calls `POST /api/stripe/create-checkout-session` with `{ inquiryId, duration, roadmapReport }`. **The backend prices the request server-side** and returns a hosted Stripe Checkout URL; the browser redirects to it.
+
+> The UI never computes or hardcodes a price. It sends the client's chosen scope and receives a ready-to-pay session — pricing is an automated, server-side concern.
+
+### 4. Automated scheduling — the success page reflects a done deal
+
+- After Stripe Checkout, the client lands on **`/inquiry/success`** (or `/inquiry/cancel`).
+- By the time this page renders, the backend webhook has **already** confirmed the inquiry, created the Google Calendar event, and sent internal notifications.
+- The success page can confirm session status via `GET /api/stripe/session/:sessionId` (and `verify-payment` as a fallback), but the **booking itself is finalized by automation, not by the UI**.
+
+### Supporting public UX
+
+- **Home:** hero, editable company statistics (`/api/homepage-stats`), services overview, published projects, testimonials, career section (openings + application form with CV/portfolio upload).
+- **Services:** index + dedicated pages — Architecture, Interior Design, Landscape, Photography, 3D Scanning, 3D Printing, Branding, Preliminary Declaration & Approvals.
+- **News & blogs:** listing and slug pages (sanitized HTML display).
+- **Legal & privacy:** cookie banner, consent-gated GA4, privacy/terms/cookie modals.
+- **SEO:** rich root metadata, JSON-LD `ArchitectureFirm` schema, dynamic `sitemap.xml`, `robots.txt` (disallows `/admin`).
+
+---
+
+## Admin console (manual override)
+
+The `/admin` area exists as a **manual override** — a safety net for the rare case a human wants to inspect or adjust what the automation maintains. Day-to-day, it is not needed.
 
 | Route | Purpose |
 |-------|---------|
 | `/admin/login` | Email/password login (httpOnly cookies) |
 | `/admin/dashboard` | Counts, recent activity, Stripe revenue summary; edit homepage stats |
 | `/admin/projects` | CRUD, publish/unpublish, Cloudinary image/plan uploads |
+| `/admin/blogs` | Blog CRUD with TinyMCE, publish/unpublish |
+| `/admin/news` | News CRUD, publish/unpublish |
 | `/admin/testimonials` | Approve / reject / delete submissions |
 | `/admin/inquiries` | List/filter inquiries; billing panel for business clients |
 | `/admin/bookings` | Paid consultation bookings (subset of inquiries) |
 | `/admin/careers` | Job opening CRUD, publish/archive |
 | `/admin/applications` | Career applications: status, notes, CV/portfolio download, CSV export |
-| `/admin/blogs` | Blog CRUD with TinyMCE, publish/unpublish |
-| `/admin/news` | News CRUD, publish/unpublish |
 | `/admin/profile` | Update admin email/password |
+
+The same content endpoints these pages call are the ones the Claude Code routines drive autonomously via the backend's machine key — a human admin and the automation share one validated pipeline.
 
 ---
 
-## Getting started / local development
+## Local development
 
 ### Prerequisites
 
-- **Node.js 18+** (required by Next.js 14; LTS recommended)
-- **npm** (or compatible package manager)
+- **Node.js 18+** (LTS recommended)
 - Backend API running locally (default `http://localhost:5000`) — see [backend README](../backend/README.md)
 
-### Installation
+### Install
 
 ```bash
 cd frontend
 npm install
 ```
 
-### Environment variables
-
-Create `frontend/.env.local`:
+### Environment variables — `frontend/.env.local`
 
 ```env
-# Required for local dev — must include the /api suffix
+# Required — must include the /api suffix
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
 
-# Required for admin blog editor (TinyMCE cloud)
+# Required for the admin blog editor (TinyMCE cloud)
 NEXT_PUBLIC_TINYMCE_API_KEY=your_tinymce_api_key
 
-# Recommended in production (Vercel)
+# Recommended in production
 NEXT_PUBLIC_SITE_URL=https://www.dibeh-architecture.com
 ```
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `NEXT_PUBLIC_API_URL` | **Yes** (prod) / recommended (dev) | Full API prefix including `/api`, e.g. `https://your-backend.onrender.com/api`. All service calls append paths like `/inquiries`, `/projects`. |
-| `NEXT_PUBLIC_TINYMCE_API_KEY` | For blog admin | TinyMCE API key used by `TinyMCEBlogEditor`. |
-| `NEXT_PUBLIC_SITE_URL` | Prod recommended | Canonical site origin for `sitemap.ts` absolute URLs. Defaults to `http://localhost:3000` in development. |
+| `NEXT_PUBLIC_API_URL` | **Yes** (prod) / recommended (dev) | Full API prefix incl. `/api`. Service calls append `/inquiries`, `/projects`, … |
+| `NEXT_PUBLIC_TINYMCE_API_KEY` | For blog admin | TinyMCE key used by the blog editor |
+| `NEXT_PUBLIC_SITE_URL` | Prod recommended | Canonical origin for `sitemap.ts`. Defaults to `http://localhost:3000` in dev |
 
-If `NEXT_PUBLIC_API_URL` is unset:
-
-- **Development:** `http://localhost:5000/api`
-- **Production / Vercel:** `https://architect-portfolio-backend-5bow.onrender.com/api` (hardcoded fallback in `services/api.ts` and `app/sitemap.ts`)
+If `NEXT_PUBLIC_API_URL` is unset: **dev** → `http://localhost:5000/api`; **prod** → hardcoded Render fallback in `services/api.ts` and `app/sitemap.ts`.
 
 ### Scripts
 
 | Command | Description |
 |---------|-------------|
-| `npm run dev` | Start dev server at `http://localhost:3000` |
+| `npm run dev` | Dev server at `http://localhost:3000` |
 | `npm run build` | Production build |
 | `npm run start` | Serve production build |
-| `npm run lint` | Run Next.js ESLint |
+| `npm run lint` | Next.js ESLint |
 
-### Typical local workflow
+### Typical workflow
 
-1. Start MongoDB-backed API: `cd backend && npm run dev`
+1. Start the API: `cd backend && npm run dev`
 2. Set `NEXT_PUBLIC_API_URL=http://localhost:5000/api` in `.env.local`
 3. `npm run dev` in `frontend`
 4. Public site: `http://localhost:3000` — Admin: `http://localhost:3000/admin/login`
@@ -194,36 +234,35 @@ All HTTP traffic goes through **`services/api.ts`**.
 
 ### Client behavior
 
-- Uses native **`fetch`** (not Axios).
-- Default **`credentials: 'include'`** so httpOnly admin cookies (`accessToken`, `refreshToken`) are sent on cross-origin requests when CORS allows it.
-- Public read-only calls may pass `{ withCredentials: false }` to omit cookies.
-- JSON requests set `Content-Type: application/json`.
-- Responses expect backend shape: `{ success: boolean, message?: string, data?: T }`.
+- Native **`fetch`** (not Axios).
+- Default **`credentials: 'include'`** so httpOnly admin cookies are sent when CORS allows.
+- Public read-only calls may pass `{ withCredentials: false }`.
+- Responses expect `{ success: boolean, message?: string, data?: T }`.
 
 ### Service modules
 
-| Module | Endpoints (relative to base URL) |
-|--------|----------------------------------|
+| Module | Endpoints |
+|--------|-----------|
 | `services/api.ts` | `get`, `post`, `put`, `patch`, `del` |
 | `services/inquiries.ts` | `/inquiries/*` multi-step flow, availability |
 | `services/stripe.ts` | `/stripe/create-checkout-session`, session status |
-| `services/projects.ts` | `/projects` |
-| `services/blogs.ts`, `news.ts` | `/blogs`, `/news` |
+| `services/projects.ts` | `/projects` (autonomously curated) |
+| `services/blogs.ts`, `news.ts` | `/blogs`, `/news` (autonomously published) |
 | `services/testimonials.ts` | `/testimonials` |
 | `services/careerApplication.ts`, `jobs.ts` | `/career`, `/careers` |
 | `services/homepageStats.ts` | `/homepage-stats` |
 | `services/admin/*` | `/admin/*` protected routes |
 
-**Multipart uploads** (inquiry documents, career CV, admin project images) use `FormData` and dedicated fetch calls in the relevant service files—not the default JSON `fetchApi` helper.
+**Multipart uploads** (inquiry documents, career CV, admin project images) use `FormData` with dedicated fetch calls, not the JSON helper.
 
 ### Admin authentication flow
 
-1. `POST /admin/auth/login` → sets httpOnly cookies on the API domain.
+1. `POST /admin/auth/login` → httpOnly cookies on the API domain.
 2. `AdminLayoutClient` calls `GET /admin/auth/me` on each protected page load.
-3. On **401**, client redirects to `/admin/login`.
-4. `POST /admin/auth/refresh` available for token refresh.
+3. On **401**, redirect to `/admin/login`.
+4. `POST /admin/auth/refresh` for token refresh.
 
-For production, the API must list the frontend origin in `FRONTEND_URLS`, use `credentials: true` CORS, and set `COOKIE_DOMAIN` on the backend when frontend and API are on sibling subdomains.
+Production requires the API to list the frontend origin in `FRONTEND_URLS`, use `credentials: true` CORS, and set `COOKIE_DOMAIN` when frontend and API are sibling subdomains.
 
 ### Images
 
@@ -233,17 +272,13 @@ For production, the API must list the frontend origin in `FRONTEND_URLS`, use `c
 
 ## Deployment (Vercel)
 
-1. Connect the `frontend` directory (or monorepo path) to Vercel.
-2. Set environment variables:
-   - `NEXT_PUBLIC_API_URL` → production API with `/api` suffix
-   - `NEXT_PUBLIC_SITE_URL` → `https://www.dibeh-architecture.com`
-   - `NEXT_PUBLIC_TINYMCE_API_KEY`
-3. Build command: `npm run build` — Output: Next.js default.
-4. Ensure backend `FRONTEND_URLS` includes the Vercel/production domain.
+1. Connect the `frontend` directory to Vercel.
+2. Set env vars: `NEXT_PUBLIC_API_URL` (with `/api`), `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_TINYMCE_API_KEY`.
+3. Build command: `npm run build`.
+4. Ensure the backend `FRONTEND_URLS` includes the Vercel/production domain.
 
 ---
 
 ## Related documentation
 
-- [API_CONFIG.md](./API_CONFIG.md) — API URL override notes
-- [Backend README](../backend/README.md) — REST API, Stripe webhooks, MongoDB
+- [Backend README](../backend/README.md) — automation & cloud-routine integration, API routes, database models, Stripe & Calendar
