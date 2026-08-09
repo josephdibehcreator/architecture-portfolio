@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import type { Project } from '@/services/projects'
 import styles from './ProjectCard.module.css'
 
@@ -21,32 +21,16 @@ export default function ProjectCard({
   wrapperClassName,
   onSelect,
 }: ProjectCardProps) {
-  const router = useRouter()
-
   const imageUrl =
     project.coverImage || (project.images && project.images.length > 0 ? project.images[0] : '')
 
   const category = project.category || `${project.tag}${project.year ? ` • ${project.year}` : ''}`
 
-  const handleActivate = () => {
-    onSelect?.()
-    router.push(`/projects/${project.slug}`)
-  }
-
-  const handleKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (event) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault()
-      handleActivate()
-    }
-  }
-
   return (
-    <div
+    <Link
+      href={`/projects/${project.slug}`}
       className={`${styles.projectCard} hover-trigger${wrapperClassName ? ` ${wrapperClassName}` : ''}`}
-      role="link"
-      tabIndex={0}
-      onClick={handleActivate}
-      onKeyDown={handleKeyDown}
+      onClick={() => onSelect?.()}
       aria-label={project.title}
       data-variant={variant}
     >
@@ -84,7 +68,7 @@ export default function ProjectCard({
           {project.description && <p className={styles.projectDescription}>{project.description}</p>}
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 

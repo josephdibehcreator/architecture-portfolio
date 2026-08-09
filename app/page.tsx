@@ -18,7 +18,8 @@ const ISR_FETCH_OPTIONS = {
 } as const
 
 export const metadata: Metadata = {
-  title: 'Home',
+  // No `title` here on purpose: the homepage inherits the branded default from
+  // app/layout.tsx ("Dibeh Architecture | Paris, French Riviera & Beirut").
   description:
     'Dibeh Architecture delivers high-end architecture, interior design, landscape, permits, 3D printing, and digital branding services in Paris, the French Riviera (Côte d’Azur), and Beirut.',
   alternates: {

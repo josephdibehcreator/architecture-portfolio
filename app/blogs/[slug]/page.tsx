@@ -59,6 +59,36 @@ async function fetchBlog(slug: string): Promise<Blog | null> {
   return response.data
 }
 
+/**
+ * Keeps the rendered <title> within Google's ~60 character display limit.
+ * The layout template appends " | Dibeh Architecture" (21 chars), so short titles
+ * are left alone and get the brand suffix; longer CMS titles keep the full headline
+ * instead and drop the suffix, since the headline carries the ranking keywords.
+ */
+const BRAND_SUFFIX_LENGTH = ' | Dibeh Architecture'.length
+const MAX_TITLE_LENGTH = 60
+
+function truncateOnWord(value: string, max: number): string {
+  if (value.length <= max) return value
+  const trimmed = value.slice(0, max - 1)
+  const lastSpace = trimmed.lastIndexOf(' ')
+  return `${(lastSpace > 0 ? trimmed.slice(0, lastSpace) : trimmed).trimEnd()}…`
+}
+
+function buildTitle(value: string): Metadata['title'] {
+  if (value.length <= MAX_TITLE_LENGTH - BRAND_SUFFIX_LENGTH) return value
+  return { absolute: truncateOnWord(value, MAX_TITLE_LENGTH) }
+}
+
+/** Plain-text body for Article structured data (schema.org expects text, not markup). */
+function toPlainText(html: string): string {
+  return sanitizeHtml(html || '')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const blog = await fetchBlog(slug)
@@ -77,7 +107,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = `https://www.dibeh-architecture.com/blogs/${slug}`
 
   return {
-    title,
+    title: buildTitle(title),
     description,
     alternates: {
       canonical: `/blogs/${slug}`,
@@ -123,12 +153,16 @@ export default async function BlogDetailPage({ params }: Props) {
 
   if (!blog) notFound()
 
+  const canonicalUrl = `https://www.dibeh-architecture.com/blogs/${slug}`
+  const articleBody = toPlainText(blog.content)
+
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: blog.title,
     description: blog.excerpt || blog.title,
-    articleBody: blog.excerpt || blog.title,
+    articleBody: articleBody || blog.excerpt || blog.title,
+    inLanguage: 'en',
     image: blog.coverImage?.url || undefined,
     author: {
       '@type': 'Person',
@@ -145,7 +179,17 @@ export default async function BlogDetailPage({ params }: Props) {
     datePublished: blog.createdAt,
     dateModified: blog.updatedAt || blog.createdAt,
     articleSection: blog.category || undefined,
-    mainEntityOfPage: `https://www.dibeh-architecture.com/blogs/${slug}`,
+    mainEntityOfPage: canonicalUrl,
+  }
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.dibeh-architecture.com' },
+      { '@type': 'ListItem', position: 2, name: 'Blog & Press', item: 'https://www.dibeh-architecture.com/news' },
+      { '@type': 'ListItem', position: 3, name: blog.title, item: canonicalUrl },
+    ],
   }
 
   return (
@@ -153,6 +197,10 @@ export default async function BlogDetailPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
       {blog.coverImage?.url && (

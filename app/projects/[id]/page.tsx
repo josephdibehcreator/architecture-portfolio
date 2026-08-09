@@ -125,6 +125,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       'Architecture, interior design, and spatial design project by Dibeh Architecture.',
     url: canonicalUrl,
     image: image || undefined,
+    inLanguage: 'en',
+    datePublished: project.createdAt || undefined,
+    dateCreated: project.createdAt || undefined,
+    dateModified: project.updatedAt || project.createdAt || undefined,
     mainEntityOfPage: canonicalUrl,
     keywords: [
       project.tag ? `${project.tag} architecture` : undefined,
@@ -172,6 +176,28 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     },
   }
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.dibeh-architecture.com' },
+      { '@type': 'ListItem', position: 2, name: 'Projects', item: 'https://www.dibeh-architecture.com/projects' },
+      { '@type': 'ListItem', position: 3, name: project.title, item: canonicalUrl },
+    ],
+  }
+
+  const info = project.info
+  const infoRows: Array<[string, string | undefined]> = [
+    ["Maître d'ouvrage", info?.maitreDouverage],
+    ["Maître d'œuvre", info?.maitreDoeuvre],
+    ['Ingénieurs', info?.ingenieurs],
+    ['Surface', info?.surface],
+    ['Programme', info?.programme],
+    ['Budget', info?.budget],
+    ['Statut', info?.statut],
+  ]
+  const visibleInfoRows = infoRows.filter(([, value]) => Boolean(value))
+
   return (
     <>
       <script
@@ -179,7 +205,40 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         // Server component renders this for crawlers; safe to inline JSON for SEO.
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <ProjectViewer project={project} />
+
+      {/*
+        The interactive viewer keeps project details behind a modal, so this block
+        renders the same content in the initial HTML for crawlers and screen readers.
+        `visually-hidden` comes from Bootstrap, which is imported globally in app/layout.tsx.
+      */}
+      {(visibleInfoRows.length > 0 || info?.fullDescription) && (
+        <section className="visually-hidden">
+          <h2>{`${project.title} — project details`}</h2>
+
+          {visibleInfoRows.length > 0 && (
+            <dl>
+              {visibleInfoRows.map(([label, value]) => (
+                <div key={label}>
+                  <dt>{label}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+
+          {info?.fullDescription && (
+            <>
+              <h3>Description</h3>
+              <p>{info.fullDescription}</p>
+            </>
+          )}
+        </section>
+      )}
     </>
   )
 }

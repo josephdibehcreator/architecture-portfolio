@@ -5,19 +5,19 @@ import PhotographyFAQ from '@/components/services/consist-of/photography/Photogr
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Architectural Photography & Virtual Tours',
+  title: 'Architectural Photography',
   description:
     'Architectural photography and virtual tour services in Paris, the French Riviera (Côte d’Azur), and Beirut for real estate, hospitality, retail, office, and luxury properties. We create high-end imagery, immersive walkthroughs, and visual content that strengthen brand perception, engagement, and conversion.',
   alternates: {
     canonical: '/services/photography',
   },
   openGraph: {
-    title: 'Architectural Photography & Virtual Tours | Real Estate, Hospitality & Commercial',
+    title: 'Architectural Photography & 360° Virtual Tours for Real Estate',
     description:
       'High-end architectural photography and immersive virtual tours for real estate, hospitality, retail, and commercial spaces in Paris, the French Riviera (Côte d’Azur), and Beirut.',
     url: 'https://www.dibeh-architecture.com/services/photography',
     siteName: 'Dibeh Architecture',
-    type: 'article',
+    type: 'website',
     images: [
       {
         url: 'https://res.cloudinary.com/dszlnbdap/image/upload/v1774427352/logo-without-text_u2gkgb.png',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Architectural Photography & Virtual Tours in Paris, French Riviera & Beirut',
+    title: 'Architectural Photography & 360° Tours in Paris & Beirut',
     description:
       'High-end property imagery and immersive virtual tours for real estate, hospitality, retail, and commercial spaces.',
     images: [
@@ -38,9 +38,28 @@ export const metadata: Metadata = {
   },
 }
 
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.dibeh-architecture.com' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.dibeh-architecture.com/services' },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: 'Photography',
+      item: 'https://www.dibeh-architecture.com/services/photography',
+    },
+  ],
+}
+
 export default function PhotographyPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <PhotographyHero />
       <PhotographyOverview />
       <PhotographySpecialties />

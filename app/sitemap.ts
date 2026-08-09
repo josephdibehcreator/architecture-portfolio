@@ -2,21 +2,19 @@ import { MetadataRoute } from 'next'
 
 /**
  * This sitemap helps search engines discover and index all public pages
- * of the architect portfolio website. It excludes admin pages and includes
- * both static pages and dynamically generated project pages.
+ * of the Dibeh Architecture website. It excludes admin pages and includes
+ * both static pages and dynamically generated project, blog, and news pages.
  *
  * Priority Guidelines:
  * - 1.0: Homepage (most important)
  * - 0.9: Main sections (About, Services, Projects listing)
- * - 0.8: Individual service pages
- * - 0.7: Individual project pages, News articles
- * - 0.6: Career, News listing, Inquiry pages
+ * - 0.8: Individual service pages, News/Blog listing
+ * - 0.7: Individual project pages, Blog articles, News articles
  *
  * Change Frequency Guidelines:
- * - daily: Frequently updated content (Projects, News)
- * - weekly: Main sections that update occasionally
- * - monthly: Static pages that rarely change
- * - yearly: Very static content
+ * - daily: Homepage and Projects listing
+ * - weekly: Services and News/Blog listings
+ * - monthly: Static pages and individual detail pages that rarely change
  */
 
 export const revalidate = 3600

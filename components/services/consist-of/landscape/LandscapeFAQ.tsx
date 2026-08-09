@@ -20,6 +20,19 @@ const faqs = [
   },
 ]
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+}
+
 export default function LandscapeFAQ() {
   const { t } = useLanguage()
   const [openIndex, setOpenIndex] = useState<number | null>(0)
@@ -30,6 +43,10 @@ export default function LandscapeFAQ() {
 
   return (
     <section className={styles.faq}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="container-fluid">
         <div className={styles.content}>
           <div className={styles.header}>

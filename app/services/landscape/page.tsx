@@ -17,7 +17,7 @@ export const metadata: Metadata = {
       'Landscape architecture services for gardens, pool areas, terraces, and outdoor living spaces in Paris, the French Riviera (Côte d’Azur), and Beirut.',
     url: 'https://www.dibeh-architecture.com/services/landscape',
     siteName: 'Dibeh Architecture',
-    type: 'article',
+    type: 'website',
     images: [
       {
         url: 'https://res.cloudinary.com/dszlnbdap/image/upload/v1774427352/logo-without-text_u2gkgb.png',
@@ -39,9 +39,28 @@ export const metadata: Metadata = {
 }
 
 
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.dibeh-architecture.com' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.dibeh-architecture.com/services' },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: 'Landscape',
+      item: 'https://www.dibeh-architecture.com/services/landscape',
+    },
+  ],
+}
+
 export default function LandscapePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <LandscapeHero />
       <LandscapeOverview />
       <LandscapeSpecialties />

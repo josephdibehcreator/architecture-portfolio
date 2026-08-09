@@ -17,7 +17,7 @@ export const metadata: Metadata = {
       'Specialized support for declaration prealable files, planning approvals, PLU compliance, and ABF or heritage-zone approvals in Paris, the French Riviera (Côte d’Azur), and Beirut.',
     url: 'https://www.dibeh-architecture.com/services/preliminary-declaration-approvals',
     siteName: 'Dibeh Architecture',
-    type: 'article',
+    type: 'website',
     images: [
       {
         url: 'https://res.cloudinary.com/dszlnbdap/image/upload/v1774427352/logo-without-text_u2gkgb.png',
@@ -38,9 +38,28 @@ export const metadata: Metadata = {
   },
 }
 
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.dibeh-architecture.com' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.dibeh-architecture.com/services' },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: 'Preliminary Declaration & Approvals',
+      item: 'https://www.dibeh-architecture.com/services/preliminary-declaration-approvals',
+    },
+  ],
+}
+
 export default function PreliminaryDeclarationApprovalsPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <PermitsHero />
       <PermitsOverview />
       <PermitsSpecialties />

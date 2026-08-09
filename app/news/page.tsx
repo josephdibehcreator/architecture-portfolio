@@ -10,7 +10,7 @@ const ISR_FETCH_OPTIONS = {
 } as const
 
 export const metadata: Metadata = {
-  title: 'Blogs and News',
+  title: 'Blog & Press',
   description:
     'Explore the latest articles, press features, and design insights from Dibeh Architecture, covering architecture, interior design, renovation, landscape, and hospitality in Paris, the French Riviera (Côte d’Azur), and Beirut.',
   alternates: {

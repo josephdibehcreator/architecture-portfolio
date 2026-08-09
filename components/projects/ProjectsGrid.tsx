@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { type Project } from '@/services/projects'
 import styles from './ProjectsGrid.module.css'
 
@@ -10,8 +10,6 @@ interface ProjectsGridProps {
 }
 
 export default function ProjectsGrid({ initialProjects = [] }: ProjectsGridProps) {
-  const router = useRouter()
-
   if (initialProjects.length === 0) {
     return (
       <section className={styles.projects}>
@@ -33,12 +31,11 @@ export default function ProjectsGrid({ initialProjects = [] }: ProjectsGridProps
               project.coverImage || (project.images && project.images.length > 0 ? project.images[0] : '')
             const category = project.category || `${project.tag}${project.year ? ` • ${project.year}` : ''}`
             return (
-              <div
+              <Link
                 key={project._id}
+                href={`/projects/${project.slug}`}
                 className={`${styles.projectCard} hover-trigger`}
-                onClick={() => {
-                  router.push(`/projects/${project.slug}`)
-                }}
+                aria-label={project.title}
               >
                 <div className={`${styles.card} hover-trigger`}>
                   <div className={`${styles.corner} ${styles.cornerTopLeft}`}></div>
@@ -76,7 +73,7 @@ export default function ProjectsGrid({ initialProjects = [] }: ProjectsGridProps
                     )}
                   </div>
                 </div>
-              </div>
+              </Link>
             )
           })}
         </div>
