@@ -1,28 +1,30 @@
 /**
  * Main API configuration and base functions for connecting to the backend
- * 
- * Automatically detects environment and uses appropriate API URL:
- * - Development: Uses local backend (http://localhost:5000/api)
- * - Production: Uses Render backend (https://architect-portfolio-backend-5bow.onrender.com/api)
+ *
+ * The backend API base URL MUST be provided via NEXT_PUBLIC_API_URL — there is
+ * no fallback. A missing value throws at module scope so the build (and dev
+ * server) fails immediately instead of silently talking to the wrong backend.
+ *
+ * - Local development: http://localhost:5000/api (.env.local)
+ * - Production (Vercel): https://architect-portfolio-backend-5bow.onrender.com/api
+ *   (set in Vercel project settings — the build fails without it)
  */
 
-// Determine API URL based on environment
 export function getApiBaseUrl(): string {
-  // If explicitly set in environment variable, use it
-  if (process.env.NEXT_PUBLIC_API_URL) {
-    return process.env.NEXT_PUBLIC_API_URL
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL?.trim().replace(/\/+$/, '')
+
+  if (!apiUrl) {
+    throw new Error(
+      'FATAL: NEXT_PUBLIC_API_URL is not set. ' +
+        'It is required for every backend API call. ' +
+        'Add it to .env.local (http://localhost:5000/api) and to the Vercel project settings, then rebuild.'
+    )
   }
-  
-  // In production (Vercel), use Render backend
-  if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
-    return 'https://architect-portfolio-backend-5bow.onrender.com/api'
-  }
-  
-  // In development, use local backend
-  return 'http://localhost:5000/api'
+
+  return apiUrl
 }
 
-const API_BASE_URL = getApiBaseUrl() 
+const API_BASE_URL = getApiBaseUrl()
 
 export interface ApiResponse<T> {
   success: boolean

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import ProjectViewer from '@/components/projects/viewer/ProjectViewer'
 import { getProjects, getProjectBySlug } from '@/services/projects'
+import { getSiteUrl } from '@/utils/site'
 
 const ISR_FETCH_OPTIONS = {
   next: { revalidate: 3600 },
@@ -60,7 +61,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     (Array.isArray(project.images) && project.images.length > 0 ? project.images[0] : undefined)
 
   const canonicalPath = `/projects/${id}`
-  const canonicalUrl = `https://www.dibeh-architecture.com${canonicalPath}`
+  const canonicalUrl = `${getSiteUrl()}${canonicalPath}`
 
   return {
     title: project.title || 'Project',
@@ -114,7 +115,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     (Array.isArray(project.images) && project.images.length > 0 ? project.images[0] : undefined)
 
   const canonicalPath = `/projects/${id}`
-  const canonicalUrl = `https://www.dibeh-architecture.com${canonicalPath}`
+  const canonicalUrl = `${getSiteUrl()}${canonicalPath}`
 
   const structuredData = {
     '@context': 'https://schema.org',
@@ -180,8 +181,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.dibeh-architecture.com' },
-      { '@type': 'ListItem', position: 2, name: 'Projects', item: 'https://www.dibeh-architecture.com/projects' },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: getSiteUrl() },
+      { '@type': 'ListItem', position: 2, name: 'Projects', item: `${getSiteUrl()}/projects` },
       { '@type': 'ListItem', position: 3, name: project.title, item: canonicalUrl },
     ],
   }

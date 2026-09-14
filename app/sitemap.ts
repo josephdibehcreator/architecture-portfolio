@@ -1,4 +1,6 @@
 import { MetadataRoute } from 'next'
+import { getApiBaseUrl } from '@/services/api'
+import { getSiteUrl } from '@/utils/site'
 
 /**
  * This sitemap helps search engines discover and index all public pages
@@ -59,21 +61,6 @@ interface ApiListItem {
   createdAt?: string
 }
 
-/**
- * Gets the API base URL for sitemap fetch.
- * On Vercel/build: never use localhost; use NEXT_PUBLIC_API_URL or production fallback.
- * Locally: use NEXT_PUBLIC_API_URL or localhost.
- */
-function getApiBaseUrl(): string {
-  if (process.env.VERCEL === '1' || process.env.NODE_ENV === 'production') {
-    return (
-      process.env.NEXT_PUBLIC_API_URL ||
-      'https://architect-portfolio-backend-5bow.onrender.com/api'
-    )
-  }
-  return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'
-}
-
 function normalizeListResponse<T extends ApiListItem>(payload: unknown): T[] {
   if (Array.isArray(payload)) return payload as T[]
 
@@ -113,7 +100,11 @@ async function fetchSitemapList<T extends ApiListItem>(
 ): Promise<SitemapFetchResult<T>> {
   try {
     const apiUrl = getApiBaseUrl()
-    const response = await fetch(`${apiUrl}${endpoint}`, ISR_FETCH_OPTIONS)
+    const response = await fetch(`${apiUrl}${endpoint}`, {
+      ...ISR_FETCH_OPTIONS,
+      // Tagged so revalidateTag(label) also refreshes sitemap data on demand
+      next: { ...ISR_FETCH_OPTIONS.next, tags: [label] },
+    })
 
     if (!response.ok) {
       const error = `[sitemap] Failed to fetch ${label}: HTTP ${response.status} ${response.statusText}`
@@ -134,6 +125,79 @@ async function fetchSitemapList<T extends ApiListItem>(
   }
 }
 
+/**
+ * Reads pagination.totalPages from an API list payload ({ data: { data, pagination } }).
+ */
+function extractTotalPages(payload: unknown): number {
+  if (payload && typeof payload === 'object') {
+    const data = (payload as Record<string, unknown>).data
+    if (data && typeof data === 'object') {
+      const pagination = (data as Record<string, unknown>).pagination
+      if (pagination && typeof pagination === 'object') {
+        const totalPages = (pagination as Record<string, unknown>).totalPages
+        if (typeof totalPages === 'number' && Number.isFinite(totalPages)) {
+          return totalPages
+        }
+      }
+    }
+  }
+  return 1
+}
+
+/**
+ * The public /blogs and /news endpoints cap limit at 50 and always paginate,
+ * so the sitemap must walk every page to see all content (fetching them
+ * without a limit would only ever see the first 20 items).
+ */
+const MAX_SITEMAP_PAGES = 50
+
+async function fetchSitemapListPaginated<T extends ApiListItem>(
+  endpoint: string,
+  label: string
+): Promise<SitemapFetchResult<T>> {
+  const apiUrl = getApiBaseUrl()
+  const separator = endpoint.includes('?') ? '&' : '?'
+  const allItems: T[] = []
+  let firstError: string | undefined
+  let page = 1
+  let totalPages = 1
+
+  do {
+    try {
+      const response = await fetch(
+        `${apiUrl}${endpoint}${separator}page=${page}&limit=50`,
+        {
+          ...ISR_FETCH_OPTIONS,
+          next: { ...ISR_FETCH_OPTIONS.next, tags: [label] },
+        }
+      )
+
+      if (!response.ok) {
+        const error = `[sitemap] Failed to fetch ${label} page ${page}: HTTP ${response.status} ${response.statusText}`
+        console.error(error)
+        if (!firstError) firstError = error
+        break
+      }
+
+      const payload: unknown = await response.json()
+      const items = normalizeListResponse<T>(payload).filter(isPublishedItem)
+      allItems.push(...items)
+      if (page === 1) totalPages = extractTotalPages(payload)
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : 'An unknown error occurred while fetching data'
+      const errorMessage = `[sitemap] Error fetching ${label} page ${page}: ${message}`
+      console.error(errorMessage)
+      if (!firstError) firstError = errorMessage
+      break
+    }
+
+    page++
+  } while (page <= totalPages && page <= MAX_SITEMAP_PAGES)
+
+  return { data: allItems, error: firstError }
+}
+
 async function getProjects(): Promise<SitemapFetchResult<SitemapProject>> {
   const result = await fetchSitemapList<ApiListItem & { updatedAt?: string }>(
     '/projects',
@@ -152,7 +216,7 @@ async function getProjects(): Promise<SitemapFetchResult<SitemapProject>> {
 }
 
 async function getBlogs(): Promise<SitemapFetchResult<SitemapBlog>> {
-  const result = await fetchSitemapList<SitemapBlog>('/blogs', 'blogs')
+  const result = await fetchSitemapListPaginated<SitemapBlog>('/blogs', 'blogs')
 
   return {
     data: result.data.map((blog) => ({
@@ -167,7 +231,7 @@ async function getBlogs(): Promise<SitemapFetchResult<SitemapBlog>> {
 }
 
 async function getNews(): Promise<SitemapFetchResult<SitemapNews>> {
-  const result = await fetchSitemapList<SitemapNews>('/news', 'news')
+  const result = await fetchSitemapListPaginated<SitemapNews>('/news', 'news')
 
   return {
     data: result.data.map((news) => ({
@@ -179,22 +243,6 @@ async function getNews(): Promise<SitemapFetchResult<SitemapNews>> {
     })),
     error: result.error,
   }
-}
-
-/**
- * Gets the base URL for the website
- * Falls back to localhost in development, should be set via NEXT_PUBLIC_SITE_URL in production
- */
-function getBaseUrl(): string {
-  if (process.env.NEXT_PUBLIC_SITE_URL) {
-    return process.env.NEXT_PUBLIC_SITE_URL
-  }
-
-  if (process.env.NODE_ENV === 'development') {
-    return 'http://localhost:3000'
-  }
-
-  return 'https://www.dibeh-architecture.com'
 }
 
 function buildStaticPages(baseUrl: string, currentDate: Date): MetadataRoute.Sitemap {
@@ -306,7 +354,7 @@ function resolveSettledResult<T>(
  * Always returns static core pages even when dynamic API fetches fail.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = getBaseUrl()
+  const baseUrl = getSiteUrl()
   const currentDate = new Date()
   const staticPages = buildStaticPages(baseUrl, currentDate)
 

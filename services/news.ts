@@ -40,6 +40,17 @@ export interface GetNewsResponse {
 }
 
 /**
+ * Merge the 'news' ISR cache tag under caller-supplied fetch options so both
+ * time-based revalidation (caller's `revalidate`) and on-demand
+ * revalidateTag('news') can refresh the same cached responses.
+ */
+function withNewsTag(
+  options: RequestInit & { withCredentials?: boolean }
+): RequestInit & { withCredentials?: boolean } {
+  return { ...options, next: { tags: ['news'], ...options.next } }
+}
+
+/**
  * Get all published news (public)
  */
 export async function getNews(
@@ -47,7 +58,7 @@ export async function getNews(
   options: (RequestInit & { withCredentials?: boolean }) = {}
 ): Promise<ApiResponse<GetNewsResponse>> {
   const queryParams = new URLSearchParams()
-  
+
   if (params.page) queryParams.append('page', params.page.toString())
   if (params.limit) queryParams.append('limit', params.limit.toString())
   if (params.source) queryParams.append('source', params.source)
@@ -55,7 +66,7 @@ export async function getNews(
   if (params.order) queryParams.append('order', params.order)
 
   const queryString = queryParams.toString()
-  return get<GetNewsResponse>(`/news${queryString ? `?${queryString}` : ''}`, options)
+  return get<GetNewsResponse>(`/news${queryString ? `?${queryString}` : ''}`, withNewsTag(options))
 }
 
 /**
@@ -65,7 +76,7 @@ export async function getNewsBySlug(
   slug: string,
   options: (RequestInit & { withCredentials?: boolean }) = {}
 ): Promise<ApiResponse<News>> {
-  return get<News>(`/news/${slug}`, options)
+  return get<News>(`/news/${slug}`, withNewsTag(options))
 }
 
 export default {

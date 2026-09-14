@@ -3,6 +3,7 @@ import ThreeDScanningHero from '@/components/services/consist-of/3d-scanning/3DS
 import ThreeDScanningOverview from '@/components/services/consist-of/3d-scanning/3DScanningOverview'
 import ThreeDScanningSpecialties from '@/components/services/consist-of/3d-scanning/3DScanningSpecialties'
 import ThreeDScanningFAQ from '@/components/services/consist-of/3d-scanning/3DScanningFAQ'
+import { getSiteUrl } from '@/utils/site'
 
 export const metadata: Metadata = {
   title: 'LiDAR 3D Scanning',
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
     title: 'LiDAR 3D Scanning | As-Built Surveys & Digital Twins',
     description:
       'Millimeter-accurate LiDAR scanning, point clouds, as-built surveys, and BIM-ready digital twins for renovation, heritage, and architecture projects in Paris, the French Riviera (Côte d’Azur), and Beirut.',
-    url: 'https://www.dibeh-architecture.com/services/3d-scanning',
+    url: '/services/3d-scanning',
     siteName: 'Dibeh Architecture',
     type: 'website',
     images: [
@@ -43,13 +44,13 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.dibeh-architecture.com' },
-    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.dibeh-architecture.com/services' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: getSiteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: `${getSiteUrl()}/services` },
     {
       '@type': 'ListItem',
       position: 3,
       name: '3D Scanning',
-      item: 'https://www.dibeh-architecture.com/services/3d-scanning',
+      item: `${getSiteUrl()}/services/3d-scanning`,
     },
   ],
 }

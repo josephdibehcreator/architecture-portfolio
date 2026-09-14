@@ -3,6 +3,7 @@ import InteriorDesignHero from '@/components/services/consist-of/interior-design
 import InteriorDesignOverview from '@/components/services/consist-of/interior-design/InteriorDesignOverview'
 import InteriorDesignSpecialties from '@/components/services/consist-of/interior-design/InteriorDesignSpecialties'
 import InteriorDesignFAQ from '@/components/services/consist-of/interior-design/InteriorDesignFAQ'
+import { getSiteUrl } from '@/utils/site'
 
 export const metadata: Metadata = {
   title: 'Interior Design Services',
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
     title: 'Interior Design Services | Bespoke Interiors & Spatial Optimization',
     description:
       'High-end interior design for residential and commercial spaces in Paris, the French Riviera (Côte d’Azur), and Beirut, including custom cabinetry, lighting design, and FF&E selection.',
-    url: 'https://www.dibeh-architecture.com/services/interior-design',
+    url: '/services/interior-design',
     siteName: 'Dibeh Architecture',
     type: 'website',
     images: [
@@ -44,13 +45,13 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.dibeh-architecture.com' },
-    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.dibeh-architecture.com/services' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: getSiteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: `${getSiteUrl()}/services` },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Interior Design',
-      item: 'https://www.dibeh-architecture.com/services/interior-design',
+      item: `${getSiteUrl()}/services/interior-design`,
     },
   ],
 }

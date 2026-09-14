@@ -46,19 +46,30 @@ export interface AdminTestimonialsResponse {
 }
 
 /**
+ * Merge the 'testimonials' ISR cache tag under caller-supplied fetch options so
+ * both time-based revalidation (caller's `revalidate`) and on-demand
+ * revalidateTag('testimonials') can refresh the same cached responses.
+ */
+function withTestimonialsTag(
+  options: RequestInit & { withCredentials?: boolean }
+): RequestInit & { withCredentials?: boolean } {
+  return { ...options, next: { tags: ['testimonials'], ...options.next } }
+}
+
+/**
  * Get all testimonials
  */
 export async function getTestimonials(
   options: (RequestInit & { withCredentials?: boolean }) = {}
 ): Promise<ApiResponse<Testimonial[]>> {
-  return get<Testimonial[]>('/testimonials', options)
+  return get<Testimonial[]>('/testimonials', withTestimonialsTag(options))
 }
 
 /**
  * Get a single testimonial by ID
  */
 export async function getTestimonialById(id: string): Promise<ApiResponse<Testimonial>> {
-  return get<Testimonial>(`/testimonials/${id}`)
+  return get<Testimonial>(`/testimonials/${id}`, withTestimonialsTag({}))
 }
 
 /**

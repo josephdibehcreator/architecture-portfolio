@@ -2,6 +2,7 @@ import PermitsHero from '@/components/services/consist-of/permits/PermitsHero'
 import PermitsOverview from '@/components/services/consist-of/permits/PermitsOverview'
 import PermitsSpecialties from '@/components/services/consist-of/permits/PermitsSpecialties'
 import PermitsFAQ from '@/components/services/consist-of/permits/PermitsFAQ'
+import { getSiteUrl } from '@/utils/site'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
     title: 'Preliminary Declaration & Approvals | PLU Compliance and Heritage Submissions',
     description:
       'Specialized support for declaration prealable files, planning approvals, PLU compliance, and ABF or heritage-zone approvals in Paris, the French Riviera (Côte d’Azur), and Beirut.',
-    url: 'https://www.dibeh-architecture.com/services/preliminary-declaration-approvals',
+    url: '/services/preliminary-declaration-approvals',
     siteName: 'Dibeh Architecture',
     type: 'website',
     images: [
@@ -42,13 +43,13 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.dibeh-architecture.com' },
-    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.dibeh-architecture.com/services' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: getSiteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: `${getSiteUrl()}/services` },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Preliminary Declaration & Approvals',
-      item: 'https://www.dibeh-architecture.com/services/preliminary-declaration-approvals',
+      item: `${getSiteUrl()}/services/preliminary-declaration-approvals`,
     },
   ],
 }

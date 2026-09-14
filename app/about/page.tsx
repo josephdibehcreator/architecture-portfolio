@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     title: 'About Dibeh Architecture | Paris, French Riviera & Beirut',
     description:
       'An architecture studio rooted in precision, emotion, and timeless design, serving clients across Paris, the French Riviera (Côte d’Azur), and Beirut.',
-    url: 'https://www.dibeh-architecture.com/about',
+    url: '/about',
     siteName: 'Dibeh Architecture',
     type: 'article',
     images: [

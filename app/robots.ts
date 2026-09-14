@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { getSiteUrl } from '@/utils/site'
 
 /**
  * robots.ts – Next.js App Router robots.txt
@@ -6,9 +7,6 @@ import { MetadataRoute } from 'next'
  * Allows search engines to crawl all public pages.
  * Blocks /admin and /api for privacy and to avoid indexing internal/API routes.
  * References the sitemap for Google Search Console and other crawlers.
- *
- * Production URL: https://www.dibeh-architecture.com/robots.txt
- * Sitemap: https://www.dibeh-architecture.com/sitemap.xml
  */
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -19,6 +17,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/admin', '/api'],
       },
     ],
-    sitemap: 'https://www.dibeh-architecture.com/sitemap.xml',
+    sitemap: `${getSiteUrl()}/sitemap.xml`,
   }
 }

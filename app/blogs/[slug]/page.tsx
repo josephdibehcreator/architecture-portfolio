@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { getBlogs, getBlogBySlug, type Blog } from '@/services/blogs'
 import { sanitizeHtml } from '@/utils/sanitizeHtml'
+import { getSiteUrl } from '@/utils/site'
 import styles from './page.module.css'
 
 const ISR_FETCH_OPTIONS = {
@@ -104,7 +105,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     blog.excerpt ||
     'Read the latest design insights from Dibeh Architecture across Paris, the French Riviera (Côte d’Azur), and Beirut.'
   const image = blog.coverImage?.url
-  const url = `https://www.dibeh-architecture.com/blogs/${slug}`
+  const url = `${getSiteUrl()}/blogs/${slug}`
 
   return {
     title: buildTitle(title),
@@ -153,7 +154,7 @@ export default async function BlogDetailPage({ params }: Props) {
 
   if (!blog) notFound()
 
-  const canonicalUrl = `https://www.dibeh-architecture.com/blogs/${slug}`
+  const canonicalUrl = `${getSiteUrl()}/blogs/${slug}`
   const articleBody = toPlainText(blog.content)
 
   const articleSchema = {
@@ -186,8 +187,8 @@ export default async function BlogDetailPage({ params }: Props) {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.dibeh-architecture.com' },
-      { '@type': 'ListItem', position: 2, name: 'Blog & Press', item: 'https://www.dibeh-architecture.com/news' },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: getSiteUrl() },
+      { '@type': 'ListItem', position: 2, name: 'Blog & Press', item: `${getSiteUrl()}/news` },
       { '@type': 'ListItem', position: 3, name: blog.title, item: canonicalUrl },
     ],
   }

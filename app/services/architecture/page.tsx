@@ -4,6 +4,7 @@ import ArchitectureOverview from '@/components/services/consist-of/architecture/
 import ArchitectureSpecialties from '@/components/services/consist-of/architecture/ArchitectureSpecialties'
 import ArchitectureProcess from '@/components/services/consist-of/architecture/ArchitectureProcess'
 import ArchitectureFAQ from '@/components/services/consist-of/architecture/ArchitectureFAQ'
+import { getSiteUrl } from '@/utils/site'
 
 export const metadata: Metadata = {
   title: 'Architecture Services',
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
     title: 'Architecture Services | Extensions, Renovations & Concept Design',
     description:
       'Tailored architectural services for extensions, renovations, facade changes, and concept design in Paris, the French Riviera (Côte d’Azur), and Beirut.',
-    url: 'https://www.dibeh-architecture.com/services/architecture',
+    url: '/services/architecture',
     siteName: 'Dibeh Architecture',
     type: 'website',
     images: [
@@ -44,13 +45,13 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.dibeh-architecture.com' },
-    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.dibeh-architecture.com/services' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: getSiteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: `${getSiteUrl()}/services` },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Architecture',
-      item: 'https://www.dibeh-architecture.com/services/architecture',
+      item: `${getSiteUrl()}/services/architecture`,
     },
   ],
 }

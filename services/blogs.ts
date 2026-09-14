@@ -41,6 +41,17 @@ export interface GetBlogsResponse {
 }
 
 /**
+ * Merge the 'blogs' ISR cache tag under caller-supplied fetch options so both
+ * time-based revalidation (caller's `revalidate`) and on-demand
+ * revalidateTag('blogs') can refresh the same cached responses.
+ */
+function withBlogsTag(
+  options: RequestInit & { withCredentials?: boolean }
+): RequestInit & { withCredentials?: boolean } {
+  return { ...options, next: { tags: ['blogs'], ...options.next } }
+}
+
+/**
  * Get all published blogs (public)
  */
 export async function getBlogs(
@@ -48,7 +59,7 @@ export async function getBlogs(
   options: (RequestInit & { withCredentials?: boolean }) = {}
 ): Promise<ApiResponse<GetBlogsResponse>> {
   const queryParams = new URLSearchParams()
-  
+
   if (params.page) queryParams.append('page', params.page.toString())
   if (params.limit) queryParams.append('limit', params.limit.toString())
   if (params.category) queryParams.append('category', params.category)
@@ -56,7 +67,7 @@ export async function getBlogs(
   if (params.order) queryParams.append('order', params.order)
 
   const queryString = queryParams.toString()
-  return get<GetBlogsResponse>(`/blogs${queryString ? `?${queryString}` : ''}`, options)
+  return get<GetBlogsResponse>(`/blogs${queryString ? `?${queryString}` : ''}`, withBlogsTag(options))
 }
 
 /**
@@ -66,7 +77,7 @@ export async function getBlogBySlug(
   slug: string,
   options: (RequestInit & { withCredentials?: boolean }) = {}
 ): Promise<ApiResponse<Blog>> {
-  return get<Blog>(`/blogs/${slug}`, options)
+  return get<Blog>(`/blogs/${slug}`, withBlogsTag(options))
 }
 
 export default {

@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     title: 'Architecture Studio in Paris, French Riviera & Beirut | Dibeh Architecture',
     description:
       'Architecture, interior design, landscape, permits, architectural visualization, and 3D printing for projects in Paris, the French Riviera (Côte d’Azur), and Beirut.',
-    url: 'https://www.dibeh-architecture.com',
+    url: '/',
     siteName: 'Dibeh Architecture',
     type: 'website',
     images: [

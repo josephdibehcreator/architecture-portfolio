@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     title: 'Architecture & Interior Design Services | Paris, French Riviera & Beirut',
     description:
       'Comprehensive architecture, interior design, landscape, permits, 3D printing, and branding services across Paris, the French Riviera (Côte d’Azur), and Beirut.',
-    url: 'https://www.dibeh-architecture.com/services',
+    url: '/services',
     siteName: 'Dibeh Architecture',
     type: 'website',
     images: [

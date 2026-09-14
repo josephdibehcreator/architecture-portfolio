@@ -3,6 +3,7 @@ import BrandingHero from '@/components/services/consist-of/branding/BrandingHero
 import BrandingOverview from '@/components/services/consist-of/branding/BrandingOverview'
 import BrandingSpecialties from '@/components/services/consist-of/branding/BrandingSpecialties'
 import BrandingFAQ from '@/components/services/consist-of/branding/BrandingFAQ'
+import { getSiteUrl } from '@/utils/site'
 
 export const metadata: Metadata = {
   title: 'Branding & Digital Presence',
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
     title: 'Branding & Digital Presence | Strategy, Identity & SEO',
     description:
       'Strategic branding, visual identity, and SEO-focused digital presence services for businesses in Paris, the French Riviera (Côte d’Azur), and Beirut.',
-    url: 'https://www.dibeh-architecture.com/services/branding',
+    url: '/services/branding',
     siteName: 'Dibeh Architecture',
     type: 'website',
     images: [
@@ -43,13 +44,13 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.dibeh-architecture.com' },
-    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.dibeh-architecture.com/services' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: getSiteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: `${getSiteUrl()}/services` },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Branding',
-      item: 'https://www.dibeh-architecture.com/services/branding',
+      item: `${getSiteUrl()}/services/branding`,
     },
   ],
 }

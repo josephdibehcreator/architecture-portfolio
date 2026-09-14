@@ -26,12 +26,23 @@ export interface Job {
 }
 
 /**
+ * Merge the 'careers' ISR cache tag under caller-supplied fetch options so both
+ * time-based revalidation (caller's `revalidate`) and on-demand
+ * revalidateTag('careers') can refresh the same cached responses.
+ */
+function withCareersTag(
+  options: RequestInit & { withCredentials?: boolean }
+): RequestInit & { withCredentials?: boolean } {
+  return { withCredentials: false, ...options, next: { tags: ['careers'], ...options.next } }
+}
+
+/**
  * Get all published jobs (careers) in display order
  */
 export async function getJobs(
   options: (RequestInit & { withCredentials?: boolean }) = {}
 ): Promise<ApiResponse<Job[]>> {
-  return get<Job[]>('/careers', { withCredentials: false, ...options })
+  return get<Job[]>('/careers', withCareersTag(options))
 }
 
 export default {

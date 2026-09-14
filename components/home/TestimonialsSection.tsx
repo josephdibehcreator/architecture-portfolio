@@ -8,6 +8,7 @@ import { useLanguage } from '@/contexts/LanguageContext'
 import styles from './TestimonialsSection.module.css'
 import { createTestimonial, type Testimonial } from '@/services/testimonials'
 import ThankYouMessage from '@/components/shared/ThankYouMessage'
+import { getSiteUrl } from '@/utils/site'
 
 // SHARED MOBILE SCROLL SPEED CONSTANT (pixels per second)
 // This ensures both Testimonials and Services sections scroll at the EXACT same visual speed
@@ -566,7 +567,7 @@ export default function TestimonialsSection({
   const handleShareReviewLink = async () => {
     if (typeof window === 'undefined') return
 
-    const url = new URL('https://www.dibeh-architecture.com/')
+    const url = new URL(getSiteUrl() + '/')
     url.searchParams.set('openReviewModal', '1')
     url.hash = 'testimonials'
     const shareLink = url.toString()

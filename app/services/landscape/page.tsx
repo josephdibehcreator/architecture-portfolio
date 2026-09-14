@@ -2,6 +2,7 @@ import LandscapeHero from '@/components/services/consist-of/landscape/LandscapeH
 import LandscapeOverview from '@/components/services/consist-of/landscape/LandscapeOverview'
 import LandscapeSpecialties from '@/components/services/consist-of/landscape/LandscapeSpecialties'
 import LandscapeFAQ from '@/components/services/consist-of/landscape/LandscapeFAQ'
+import { getSiteUrl } from '@/utils/site'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
     title: 'Landscape Architecture | Gardens, Terraces & Outdoor Living',
     description:
       'Landscape architecture services for gardens, pool areas, terraces, and outdoor living spaces in Paris, the French Riviera (Côte d’Azur), and Beirut.',
-    url: 'https://www.dibeh-architecture.com/services/landscape',
+    url: '/services/landscape',
     siteName: 'Dibeh Architecture',
     type: 'website',
     images: [
@@ -43,13 +44,13 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.dibeh-architecture.com' },
-    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.dibeh-architecture.com/services' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: getSiteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: `${getSiteUrl()}/services` },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Landscape',
-      item: 'https://www.dibeh-architecture.com/services/landscape',
+      item: `${getSiteUrl()}/services/landscape`,
     },
   ],
 }

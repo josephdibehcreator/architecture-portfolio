@@ -7,6 +7,7 @@ import PublicLayoutWrapper from '@/components/shared/layout/PublicLayoutWrapper'
 import { LanguageProvider } from '@/contexts/LanguageContext'
 import GoogleAnalytics from '@/components/shared/GoogleAnalytics'
 import { socialLinks } from '@/config/socialLinks'
+import { getSiteUrl } from '@/utils/site'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -21,7 +22,7 @@ const spaceMono = Space_Mono({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.dibeh-architecture.com'),
+  metadataBase: new URL(getSiteUrl()),
   title: {
     default: 'Dibeh Architecture | Paris, French Riviera & Beirut',
      template: '%s | Dibeh Architecture'
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     alternateLocale: ['fr_FR', 'en_GB'],
-    url: 'https://www.dibeh-architecture.com',
+    url: getSiteUrl(),
     siteName: 'Dibeh Architecture',
     title: 'Dibeh Architecture | Paris, French Riviera & Beirut',
     description:
@@ -89,10 +90,10 @@ const organizationSchema = {
   founder: {
     '@type': 'Person',
     name: 'Joseph Dibeh',
-    url: 'https://www.dibeh-architecture.com/about',
+    url: `${getSiteUrl()}/about`,
       image: 'https://res.cloudinary.com/dszlnbdap/image/upload/v1774427352/logo-without-text_u2gkgb.png',
   },
-  url: 'https://www.dibeh-architecture.com',
+  url: getSiteUrl(),
   logo: 'https://res.cloudinary.com/dszlnbdap/image/upload/v1774427352/logo-without-text_u2gkgb.png',
   image:
     'https://res.cloudinary.com/dszlnbdap/image/upload/v1774427352/logo-without-text_u2gkgb.png',

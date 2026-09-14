@@ -2,6 +2,7 @@ import PhotographyHero from '@/components/services/consist-of/photography/Photog
 import PhotographyOverview from '@/components/services/consist-of/photography/PhotographyOverview'
 import PhotographySpecialties from '@/components/services/consist-of/photography/PhotographySpecialties'
 import PhotographyFAQ from '@/components/services/consist-of/photography/PhotographyFAQ'
+import { getSiteUrl } from '@/utils/site'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
     title: 'Architectural Photography & 360° Virtual Tours for Real Estate',
     description:
       'High-end architectural photography and immersive virtual tours for real estate, hospitality, retail, and commercial spaces in Paris, the French Riviera (Côte d’Azur), and Beirut.',
-    url: 'https://www.dibeh-architecture.com/services/photography',
+    url: '/services/photography',
     siteName: 'Dibeh Architecture',
     type: 'website',
     images: [
@@ -42,13 +43,13 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.dibeh-architecture.com' },
-    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.dibeh-architecture.com/services' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: getSiteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: `${getSiteUrl()}/services` },
     {
       '@type': 'ListItem',
       position: 3,
       name: 'Photography',
-      item: 'https://www.dibeh-architecture.com/services/photography',
+      item: `${getSiteUrl()}/services/photography`,
     },
   ],
 }

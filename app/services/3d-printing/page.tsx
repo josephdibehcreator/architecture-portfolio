@@ -3,6 +3,7 @@ import ThreeDPrintingHero from '@/components/services/consist-of/3d-printing/3DP
 import ThreeDPrintingOverview from '@/components/services/consist-of/3d-printing/3DPrintingOverview'
 import ThreeDPrintingSpecialties from '@/components/services/consist-of/3d-printing/3DPrintingSpecialties'
 import ThreeDPrintingFAQ from '@/components/services/consist-of/3d-printing/3DPrintingFAQ'
+import { getSiteUrl } from '@/utils/site'
 
 export const metadata: Metadata = {
   title: 'Architectural 3D Printing',
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
     title: 'Architectural 3D Printing | Scale Models, Maquettes & Prototyping',
     description:
       'Transform digital architectural designs into physical scale models for client presentations, design verification, and planning submissions in Paris, the French Riviera (Côte d’Azur), and Beirut.',
-    url: 'https://www.dibeh-architecture.com/services/3d-printing',
+    url: '/services/3d-printing',
     siteName: 'Dibeh Architecture',
     type: 'website',
     images: [
@@ -42,13 +43,13 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.dibeh-architecture.com' },
-    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.dibeh-architecture.com/services' },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: getSiteUrl() },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: `${getSiteUrl()}/services` },
     {
       '@type': 'ListItem',
       position: 3,
       name: '3D Printing',
-      item: 'https://www.dibeh-architecture.com/services/3d-printing',
+      item: `${getSiteUrl()}/services/3d-printing`,
     },
   ],
 }
