@@ -32,7 +32,7 @@ export default function PressGrid({ initialNews = [] }: PressGridProps) {
 
         <div className={styles.grid}>
           {initialNews.map((item) => (
-            <Link key={item._id} href={`/news/${item.slug}`} className={`${styles.card} hover-trigger`}>
+            <Link key={item._id} href={`/news/${item.slug}`} className={`${styles.card} hover-trigger`} title={item.title}>
               <div className={styles.corner} data-position="top-left"></div>
               <div className={styles.corner} data-position="top-right"></div>
               <div className={styles.corner} data-position="bottom-left"></div>

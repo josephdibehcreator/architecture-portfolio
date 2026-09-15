@@ -40,7 +40,7 @@ export default function NewsSection({ initialBlogs = [] }: NewsSectionProps) {
         <div className="container-fluid">
           <div className={styles.grid}>
             {initialBlogs.map((blog) => (
-              <Link key={blog._id} href={`/blogs/${blog.slug}`} className={`${styles.card} hover-trigger`}>
+              <Link key={blog._id} href={`/blogs/${blog.slug}`} className={`${styles.card} hover-trigger`} title={blog.title}>
                 <div className={styles.corner} data-position="top-left"></div>
                 <div className={styles.corner} data-position="top-right"></div>
                 <div className={styles.corner} data-position="bottom-left"></div>
