@@ -14,6 +14,7 @@ import {
   getBookedSlots
 } from '@/services/inquiries'
 import { createCheckoutSession } from '@/services/stripe'
+import { CONSULTATION_OPTIONS, DEFAULT_CONSULTATION_DURATION, ConsultationDuration } from '@/utils/consultation'
 
 const services = [
   'Architecture',
@@ -66,7 +67,7 @@ export default function InquirySection({ sectionNumber }: InquirySectionProps = 
     timeline: 'asap' as 'asap' | '3m' | '6m' | '1y',
     surface: '',
     description: '',
-    duration: '60',
+    duration: DEFAULT_CONSULTATION_DURATION,
     roadmapReport: false,
     format: 'online' as 'online' | 'onsite',
   })
@@ -287,7 +288,7 @@ export default function InquirySection({ sectionNumber }: InquirySectionProps = 
           timeline: 'asap',
           surface: '',
           description: '',
-          duration: '60',
+          duration: DEFAULT_CONSULTATION_DURATION,
           roadmapReport: false,
           format: 'online',
         })
@@ -908,51 +909,27 @@ export default function InquirySection({ sectionNumber }: InquirySectionProps = 
                   <div className={styles.consultLeft}>
                     <h3 className={styles.consultTitle}>{t('inquiry_consult_session_details')}</h3>
                     <div className={styles.durationOptions}>
-                      <label className={styles.durationLabel}>
-                        <input
-                          type="radio"
-                          name="duration"
-                          value="30"
-                          checked={formData.duration === '30'}
-                          onChange={(e) => setFormData(prev => ({ ...prev, duration: e.target.value }))}
-                          className={styles.radioInput}
-                        />
-                        <div className={styles.durationCard}>
-                          <span>{t('inquiry_consult_duration_30')}</span>
-                          <span className={styles.durationPrice}>€1.00</span>
-                        </div>
-                      </label>
-                      <label className={styles.durationLabel}>
-                        <input
-                          type="radio"
-                          name="duration"
-                          value="60"
-                          checked={formData.duration === '60'}
-                          onChange={(e) => setFormData(prev => ({ ...prev, duration: e.target.value }))}
-                          className={styles.radioInput}
-                        />
-                        <div className={styles.durationCard}>
-                          <span>
-                            {t('inquiry_consult_duration_60')}
-                            <span className={styles.recommended}>{t('inquiry_consult_recommended')}</span>
-                          </span>
-                          <span className={styles.durationPrice}>€2.00</span>
-                        </div>
-                      </label>
-                      <label className={styles.durationLabel}>
-                        <input
-                          type="radio"
-                          name="duration"
-                          value="90"
-                          checked={formData.duration === '90'}
-                          onChange={(e) => setFormData(prev => ({ ...prev, duration: e.target.value }))}
-                          className={styles.radioInput}
-                        />
-                        <div className={styles.durationCard}>
-                          <span>{t('inquiry_consult_duration_90')}</span>
-                          <span className={styles.durationPrice}>€3.00</span>
-                        </div>
-                      </label>
+                      {CONSULTATION_OPTIONS.map((option) => (
+                        <label key={option.duration} className={styles.durationLabel}>
+                          <input
+                            type="radio"
+                            name="duration"
+                            value={option.duration}
+                            checked={formData.duration === option.duration}
+                            onChange={(e) => setFormData(prev => ({ ...prev, duration: e.target.value as ConsultationDuration }))}
+                            className={styles.radioInput}
+                          />
+                          <div className={styles.durationCard}>
+                            <span>
+                              {t(`inquiry_consult_duration_${option.duration}`)}
+                              {option.recommended && (
+                                <span className={styles.recommended}>{t('inquiry_consult_recommended')}</span>
+                              )}
+                            </span>
+                            <span className={styles.durationPrice}>€{option.price}</span>
+                          </div>
+                        </label>
+                      ))}
                       <label className={styles.checkboxLabel}>
                         <input
                           type="checkbox"
